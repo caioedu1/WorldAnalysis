@@ -1,0 +1,24 @@
+Average unemployment rate in countries with higher GDP per capita: 4.96%
+Average unemployment rate in countries with lower GDP per capita: 5.06%
+Average tax revenue percentage in countries with higher GDP per capita: 20.86%
+Average tax revenue percentage in countries with lower GDP per capita: 10.88%
+Average total tax rate percentage in countries with higher GDP per capita: 31.91%
+Average total tax rate percentage in countries with lower GDP per capita: 47.31%
+
+Observação 1: Expectativa de vida nos países com maior pib per capita em média 20 anos maior do que países menor pib.
+
+Observação 2: CPI nos países maior pib na faixa de 100 a 120, enquanto países menor pib tem uma variação maior,
+de 100 até 1344 no caso do Sudão. 
+
+Observação 3: Um fato interessante é o de que países com menores níveis de pib per capita 
+possuem uma taxa de desemprego média menor do que a taxa de desemprego média dos países com maiores níveis de
+pib per capita.
+
+Observação 4: Observamos que países com maiores PIB per capita capturam quase o dobro de impostos do que os países
+com menores PIB per capita. 
+
+Observação 5: Países com maiores PIB per capita possuem menores níveis de impostos em cima de empresas, 
+enquanto países com menores PIB per capita possuem menos níveis de impostos em empresas.
+
+Observação 6: Outra coisa que podemos observar é que a maioria dos países com menores PIB per capita estão 
+localizados no continente africano, enquanto os países com maiores PIB estão, em sua maioria, na Europa/Ocidente.
