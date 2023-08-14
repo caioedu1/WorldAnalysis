@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
 import locale
 
@@ -13,7 +12,6 @@ locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 data = "world-data-2023.csv"
 read_data = pd.read_csv(data)
 df = pd.DataFrame(read_data)
-
 # Data Clean
 pd.options.display.float_format = '{:.2f}'.format
 
@@ -32,7 +30,7 @@ df['Country'] = df['Country'].str.replace('S�����������', 
 df['Unemployment rate'] = pd.to_numeric(df['Unemployment rate'].str.replace('%', ''))
 df['Tax revenue (%)'] = pd.to_numeric(df['Tax revenue (%)'].str.replace('%', ''))
 df['Total tax rate'] = pd.to_numeric(df['Total tax rate'].str.replace('%', ''))
-df['CPI Change (%)'] = pd.to_numeric(df['CPI Change (%)'].str.replace('%', '')).dropna()
+df['CPI Change (%)'] = pd.to_numeric(df['CPI Change (%)'].str.replace('%', '').str.replace('.', ''), errors='coerce') / 100
 
 # transform csv file into xlsx file for visualization sakes
 df.to_excel("world-data-2023.xlsx", index=False)
@@ -230,14 +228,3 @@ def geo_indices_table():
 
 # geo_indices_table()
 
-# Task 12: Create a graph that represents the global evolution of CPI ordered by less GDP > high GDP
-def global_CPI_evolution():
-    plt.figure()
-    cpi_evolution = df.sort_values(by='CPI Change (%)', ascending=True)
-    plt.hist()
-    plt.title('Global CPI Change (%) ordered by ascending GDP')
-    plt.xlabel('CPI Change (%)')
-    plt.ylabel('Rank')
-    
-global_CPI_evolution()
-plt.show()
