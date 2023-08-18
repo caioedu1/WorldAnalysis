@@ -196,18 +196,19 @@ print('-'*100)
 
 # Task 11: Create a table containing the main geographic indices of the 5 countries with the highest GDP.
 def geo_indices_table():
-    fig, ax = plt.subplots(figsize=(30, 35))
+    fig, ax = plt.subplots(figsize=(15, 5))
     ax.axis('off')
 
     top_gdp_df = df.sort_values(by='GDP', ascending=False).head(5)
-    list_df = top_gdp_df[['Country', 'Latitude', 'Longitude', 
+    list_df = top_gdp_df[['Country','Latitude', 'Longitude', 
                 'Agricultural Land (%)', 'Co2-Emissions', 
                 'Forested Area (%)', 'Urban_population'
                 ]]
-    data = list_df.describe().round()
+    print(list_df)
+    data = list_df.round(decimals=2)
     cell_text = data.values.tolist()
-    columns = data.columns
-    rows = data.index
+    columns = list_df.columns
+    rows = data['Country']
 
     table = plt.table(cellText=cell_text, rowLabels=rows, colLabels=columns, loc='center', edges='closed')
     table.auto_set_font_size(False)
@@ -226,5 +227,5 @@ def geo_indices_table():
     plt.subplots_adjust(left=0, bottom=0)
     plt.savefig('geo_indices_table.png', format='png', dpi=300)
 
-# geo_indices_table()
-
+geo_indices_table()
+plt.show()

@@ -1,7 +1,6 @@
 import win32com.client as win32 
 import os
 
-
 def send_email(emails):
     # Check if emails is a list of strings
     if not isinstance(emails, list):
@@ -29,4 +28,6 @@ def send_email(emails):
     mail.Send() 
 
     print ('Email sent successfully!')
+    
+
     
