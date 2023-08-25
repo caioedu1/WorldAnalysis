@@ -1,13 +1,17 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import locale
+from create_indexes import human_development_index
 
-# Databases links:
+# Database links:
 # https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023
+# obs: data may not be 100% accurate, but the main purpose of this project is just show my abilities in data analysis,
+# so any information extracted is exclusively based in this database.
 
 # world-data-2023.csv analysis
 # configure locale
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
 # Process files
 data = "world-data-2023.csv"
 read_data = pd.read_csv(data)
@@ -31,10 +35,15 @@ df['Unemployment rate'] = pd.to_numeric(df['Unemployment rate'].str.replace('%',
 df['Tax revenue (%)'] = pd.to_numeric(df['Tax revenue (%)'].str.replace('%', ''))
 df['Total tax rate'] = pd.to_numeric(df['Total tax rate'].str.replace('%', ''))
 df['CPI Change (%)'] = pd.to_numeric(df['CPI Change (%)'].str.replace('%', '').str.replace('.', ''), errors='coerce') / 100
+df['Co2-Emissions'] = pd.to_numeric(df['Co2-Emissions'].str.replace(',', ''))
+df['Land Area(Km2)'] = pd.to_numeric(df['Land Area(Km2)'].str.replace('"', ''))
 
-# transform csv file into xlsx file for visualization sakes
-df.to_excel("world-data-2023.xlsx", index=False)
+# transform csv file into xlsx file for visualization purposes
+# df.to_excel("world-data-2023.xlsx", index=False)
 
+
+df['CO2-Emissions/person'] = df['Population'] / df['Co2-Emissions']
+print(df.loc[df['Country'] == 'Ethiopia', 'CO2-Emissions/person'])
 # Task 1: Calculate the average world population density.
 avg_dens = df['Density (P/Km2)'].mean()
 print(f"Average world population density: {avg_dens:.1f}")
@@ -165,7 +174,6 @@ def show_urbanPopulation():
 # Task 10: Add temporary GDP per capita.
 # Make a full analysis of how unemployement rate, GDP, GDP per capita,
 # life expectancy, CPI and other indicators are correlated.
-
 df['GDP per capita'] = df['GDP'] / df['Population']
 less_GDPpercapita = df[df['GDP per capita'] < 700]
 sort_less_GDPpc = less_GDPpercapita.sort_values(by='GDP per capita', ascending=True)
@@ -194,38 +202,4 @@ lowerGDPpc_AVGtotaltax = sort_less_GDPpc['Total tax rate'].mean()
 print(f"Average total tax rate percentage in countries with lower GDP per capita: {lowerGDPpc_AVGtotaltax:.2f}%")
 print('-'*100)  
 
-# Task 11: Create a table containing the main geographic indices of the 5 countries with the highest GDP.
-def geo_indices_table():
-    fig, ax = plt.subplots(figsize=(15, 5))
-    ax.axis('off')
 
-    top_gdp_df = df.sort_values(by='GDP', ascending=False).head(5)
-    list_df = top_gdp_df[['Country','Latitude', 'Longitude', 
-                'Agricultural Land (%)', 'Co2-Emissions', 
-                'Forested Area (%)', 'Urban_population'
-                ]]
-    print(list_df)
-    data = list_df.round(decimals=2)
-    cell_text = data.values.tolist()
-    columns = list_df.columns
-    rows = data['Country']
-
-    table = plt.table(cellText=cell_text, rowLabels=rows, colLabels=columns, loc='center', edges='closed')
-    table.auto_set_font_size(False)
-    table.set_fontsize(10)
-    for i in range(len(columns)):
-        table[0, i].set_fontsize(10)
-
-    table.scale(3, 3)
-
-    for (row, col), cell in table.get_celld().items():
-        if (row == 0):
-            cell.set_fontsize(10)
-        cell.set_width(0.12)
-        cell.set_height(0.08)
-        cell.set_linewidth(0.5)
-    plt.subplots_adjust(left=0, bottom=0)
-    plt.savefig('geo_indices_table.png', format='png', dpi=300)
-
-geo_indices_table()
-plt.show()
