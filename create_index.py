@@ -44,7 +44,17 @@ df['Normalized EQI'] = 0 + (((df['Environmental Quality Index'] - df['Environmen
     (100 - 0) ) / (df['Environmental Quality Index'].max() - df['Environmental Quality Index'].min()))
 ) * 100
 
-# df.to_excel("aaaaaa.xlsx", index=False)
+# df.to_excel("new_data_visualization.xlsx", index=False)
+
+# print(df.loc[df['CO2-Emissions/person'] >= 2000, 'CO2-Emissions/person'])
+# print(df.loc[df['Co2-Emissions'] >= 350000, 'Co2-Emissions'])
+print(df.loc[df['Normalized EQI'] < 30, 'Normalized EQI'].count())
+print(df.loc[df['Normalized EQI'] < 20, 'Normalized EQI'].count())
+print(df.loc[df['Normalized EQI'] < 10, 'Normalized EQI'].count())
+print(df.loc[df['Forested Area (%)'] < 1, 'Normalized EQI'].count())
+
+print()
+print()
 
 # Create indexes
 def human_development_index(country):
@@ -103,82 +113,43 @@ def human_development_index(country):
             else:
                 raise ValueError('Country has null values')
             
-            # if not pd.isnull(country_row[df['Environmental Quality Index']]).any():
-            #     if country_row.loc[:, 'Environmental Quality Index'].item() > 90
-            
-            # check points
-            if points > 18:
-                print({c: 'Nice country'})
-            elif points > 12:
-                print({c: 'Mid level country'})
-            else:
-                print({c: 'Bad country'})
-    else:
-        raise TypeError('Country must be a string or a list of strings')
-        
-def enviroment_index(country):
-    if isinstance(country, list) and all(isinstance(i, str) for i in country) or (
-        isinstance(country, str)
-    ):
-        if not isinstance(country, list):
-            country = [country]
-        for c in country:
-            points = 0
-            country_row = df[df['Country'] == c]
-            
-            if not pd.isnull(country_row['Forested Area (%)']).any():
-                if country_row.loc[:, 'Forested Area (%)'].item() >= 40:
-                    points += 7                    
-                elif country_row.loc[:, 'Forested Area (%)'].item() >= 30:
-                    points += 5
-                elif country_row.loc[:, 'Forested Area (%)'].item() >= 20:
-                    points += 3
-                elif country_row.loc[:, 'Forested Area (%)'].item() > 5:
-                    points += 1
-                else:
-                    points -= 3
-            print(points)
             if not pd.isnull(country_row[['CO2-Emissions/person', 'Co2-Emissions']]).any().any():
+                if country_row.loc[:, 'Co2-Emissions'].item() <= 7000 and country_row.loc[:, 'CO2-Emissions/person'].item() <= 200:
+                    points += 9
                 if country_row.loc[:, 'Co2-Emissions'].item() <= 10000 and country_row.loc[:, 'CO2-Emissions/person'].item() <= 300:
                     points += 7
                 elif country_row.loc[:, 'Co2-Emissions'].item() <= 50000 and country_row.loc[:, 'CO2-Emissions/person'].item() <= 500:
                     points += 5
-                if country_row.loc[:, 'Co2-Emissions'].item() >= 100000 and country_row.loc[:, 'CO2-Emissions/person'].item() > 1000:
+                elif country_row.loc[:, 'Co2-Emissions'].item() > 50000 and country_row.loc[:, 'CO2-Emissions/person'].item() > 500:
                     points -= 3
-            else:
-                raise ValueError('Country has null values')
-            print(points)
-            # Here, I will consider density as a bad thing. Density can arguably mean good or bad things,
-            # but general means bad things.
-            if not pd.isnull(country_row['Density (P/Km2)']).any():
-                if country_row.loc[:, 'Density (P/Km2)'].item() <= 25:
-                    points += 3
-                if country_row.loc[:, 'Density (P/Km2)'].item() >= 200:
-                    points -= 1
-                elif country_row.loc[:, 'Density (P/Km2)'].item() >= 300:
+                elif country_row.loc[:, 'Co2-Emissions'].item() >= 100000 and country_row.loc[:, 'CO2-Emissions/person'].item() > 1000:
                     points -= 3
-            else:
-                raise ValueError('Country has null values')
-            print(points)    
-            
-            if not pd.isnull(country_row['Normalized EQI']).any():
-                if country_row.loc[:, 'Normalized EQI'].item() > 100:
-                    points += 5
-                elif country_row.loc[:, 'Normalized EQI'].item() > 70:
-                    points += 3
-                elif country_row.loc[:, 'Normalized EQI'].item() > 40:
-                    points += 1
-            print(points)
-
                     
-            # check points
-            if points > 15:
-                print({c: 'Nice country'})
-            elif points > 7:
-                print({c: 'Mid level country'})
-            else:
-                print({c: 'Bad country'})
+                if country_row.loc[:, 'Co2-Emissions'].item() <= 5000 or country_row.loc[:, 'CO2-Emissions/person'].item() <= 150:
+                    points += 3
+                if country_row.loc[:, 'Co2-Emissions'].item() >= 500000 or country_row.loc[:, 'CO2-Emissions/person'].item() >= 6000:
+                    points -= 9
+                elif country_row.loc[:, 'Co2-Emissions'].item() >= 350000 or country_row.loc[:, 'CO2-Emissions/person'].item() >= 3000:
+                    points -= 5
+                    
+            if not pd.isnull(country_row['Forested Area (%)']).any():
+                if country_row.loc[:, 'Forested Area (%)'].item() >= 50:
+                    points += 9
+                elif country_row.loc[:, 'Forested Area (%)'].item() >= 40:
+                    points += 7                    
+                elif country_row.loc[:, 'Forested Area (%)'].item() > 30:
+                    points += 5
+                elif country_row.loc[:, 'Forested Area (%)'].item() <= 20:
+                    points -= 1
+                elif country_row.loc[:, 'Forested Area (%)'].item() < 10:
+                    points -= 3
+                elif country_row.loc[:, 'Forested Area (%)'].item() <= 1:
+                    points -= 3
+                elif country_row.loc[:, 'Forested Area (%)'].item() <= 0.1:
+                    points -= 5    
+                                
+
     else:
         raise TypeError('Country must be a string or a list of strings')
-    
-enviroment_index(['Sweden', 'Norway', 'Switzerland', 'United Kingdom', 'Brazil', 'China', 'Saudi Arabia', 'Russia', 'India'])  
+        
+        

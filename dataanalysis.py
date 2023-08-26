@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import locale
-from create_indexes import human_development_index
+from create_index import human_development_index
 
 # Database links:
 # https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023
