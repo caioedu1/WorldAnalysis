@@ -56,7 +56,7 @@ highest_life_expectancy = df["Life expectancy"].max()
 country_highest_LE = df.loc[
     df["Life expectancy"] == highest_life_expectancy, "Country"
 ].iloc[0]
-print(
+print(  
     f"The Country with the highest life expectancy is {country_highest_LE} with an expectancy of {highest_life_expectancy}"
 )
 
@@ -65,8 +65,9 @@ avg_forested_area = df["Forested Area (%)"].mean()
 print(f"Global average percentage of forested area: {avg_forested_area:.2f}%")
 print("-" * 100)
 
-# Task 7: Find the country with the highest,
-# the country with the lowest primary school, and the avg primary school enrollment rate.
+# Task 7: Find the country with the highest primary school enrollment rate,
+# the country with the lowest primary school enrollment rate,
+# and the avg primary school enrollment rate.
 avg_primary_education = df["Gross primary education enrollment (%)"].mean()
 highest_primary_education = df["Gross primary education enrollment (%)"].max()
 lowest_primary_education = df["Gross primary education enrollment (%)"].min()
@@ -84,40 +85,40 @@ print(
 )
 print("-" * 100)
 
-# Task 8: Identify all the countries with an inflation rate higher than 300
-# and all the countries with an inflation rate less than 100.
-# Also, get the CPI Change (%) of all countries that match those queries.
-cpi_higher = df.loc[df["CPI"] > 300, ["Country", "CPI", "CPI Change (%)"]]
-df_cpi_higher = pd.DataFrame(cpi_higher)
-sort_higher_cpi = df_cpi_higher.sort_values(by="CPI")
+"""Task 8: Identify the top 5 countries with the highest inflation rates and
+the top 5 countries with the lowest inflation rates.
+Also, get the CPI Change (%) of all countries that match those queries."""
+cpi_analysis = df[["Country", "CPI", "CPI Change (%)"]]
+sort_cpi_analysis = cpi_analysis.sort_values(by="CPI", ascending=True)
+"""Drop null values"""
+sort_cpi_analysis = sort_cpi_analysis.dropna(subset=["Country", "CPI"])
 
-cpi_lower = df.loc[df["CPI"] < 100, ["Country", "CPI", "CPI Change (%)"]]
-df_cpi_lower = pd.DataFrame(cpi_lower)
-sort_lower_cpi = df_cpi_lower.sort_values(by="CPI")
-
+print(f"CPI Change (%) of all countries with an inflation rate higher than 300:\n{sort_cpi_analysis.head(5)}")
+print(f"CPI Change (%) of all countries with an inflation rate lower than 100:\n{sort_cpi_analysis.head(-5)}")
+print("-"*100)
 
 def show_inflation_rate():
     plt.figure(figsize=(10, 6))
     plt.subplot(1, 2, 1)
-    plt.bar(df_cpi_lower["Country"], df_cpi_lower["CPI"])
+    plt.bar(sort_cpi_analysis["Country"].head(5), sort_cpi_analysis["CPI"].head(5))
     plt.xlabel("Country", fontsize=10)
     plt.ylabel("CPI", fontsize=10)
-    plt.xticks(rotation=75)
+    plt.xticks(rotation=75) 
     plt.title("Countries with low inflation rate", fontsize=14)
 
     plt.subplot(1, 2, 2)
-    plt.bar(df_cpi_higher["Country"], df_cpi_higher["CPI"])
+    plt.bar(sort_cpi_analysis["Country"].tail(5), sort_cpi_analysis["CPI"].tail(5))
     plt.xlabel("Country", fontsize=10)
     plt.ylabel("CPI", fontsize=10)
     plt.xticks(rotation=75)
     plt.title("Countries with high inflation rate", fontsize=14)
-
+    
     plt.subplots_adjust(hspace=0.5, wspace=0.5)
     plt.tight_layout()
-    plt.savefig(r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\Learn Coding\html e css\HarvardCS50\plot_figs\inflation_rates.png", format="png", dpi=300)
+    plt.savefig(r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\inflation_rates.png", format="png", dpi=300)
 
 
-# show_inflation_rate()
+show_inflation_rate()
 
 # Task 9: Identify all the countries with the top 10 highest urban population,
 # as well as all the countries with the top 10 lowest urban population.
@@ -175,15 +176,15 @@ def show_urbanPopulation():
 
     plt.subplots_adjust(hspace=0.5, wspace=0.5)
     plt.tight_layout()
-    plt.savefig(r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\Learn Coding\html e css\HarvardCS50\plot_figs\urban_populations.png", format="png", dpi=300)
+    plt.savefig(r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\urban_populations.png", format="png", dpi=300)
 
 
-# show_urbanPopulation()
+show_urbanPopulation()
 
 
-# Task 10: Add temporary GDP per capita.
-# Make a full analysis of how unemployement rate, GDP, GDP per capita,
-# life expectancy, CPI and other indicators are correlated.
+"""Task 10: Add GDP per capita column.
+Make a full analysis of how unemployement rate, GDP, GDP per capita,
+life expectancy, CPI and other indicators are correlated."""
 df["GDP per capita"] = df["GDP"] / df["Population"]
 less_GDPpercapita = df[df["GDP per capita"] < 700]
 sort_less_GDPpc = less_GDPpercapita.sort_values(by="GDP per capita", ascending=True)
@@ -234,5 +235,23 @@ print(
 print("-" * 100)
 
 
+"""Task 11: Create a bar plot that demonstrates the total tax rate (TTR) 
+of the 10 countries with highest GDP."""
+gdp10sorted = df.sort_values(by="GDP", ascending=False)
+ten_highest_gdp = gdp10sorted[["Country", "Total tax rate"]].head(10)
+
+def TTR_plot():
+    plt.figure(figsize=(10, 6))
+    plt.bar(ten_highest_gdp["Country"], ten_highest_gdp["Total tax rate"])
+    plt.xlabel("Country", fontsize=10)
+    plt.ylabel("CPI", fontsize=10)
+    plt.xticks(rotation=75)
+    plt.title("Total Tax Rate of the 10 countries with the highest GDP", fontsize=14)
+
+    plt.subplots_adjust(hspace=0.5, wspace=0.5)
+    plt.tight_layout()
+    plt.savefig(r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\TTRinCountriesHighestGDP.png", format="png", dpi=300)
+    
+TTR_plot()
 
 
