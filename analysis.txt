@@ -1,32 +1,59 @@
-Some general analysis
+General analysis of some indicators
+    
+Population Density
 Average world population density: 134.0
+The country with the highest population density is Palestinian National Authority with a density of 847.0
+The country with the lowest population density is Bangladesh with a density of 1.265
 
-The Country with the smallest Armed Forces is Antigua and Barbuda with an Armed Force of literally 0.0
+Armed Forces
+The top 5 countries with the highest Armed Forces are: 
+         Country  Armed Forces size
+1          India         3031000.00
+2          China         2695000.00
+3    North Korea         1469000.00
+4         Russia         1454000.00
+5  United States         1359000.00
+The top 5 countries with the smallest Armed Forces are: 
+      Country  Armed Forces size
+1  The Gambia            1000.00
+2  Cape Verde            1000.00
+3    Barbados            1000.00
+4  East Timor            2000.00
+5       Malta            2000.00
 
+Birth Rate
 Average birth rate: 20.15
+The country with the highest birth rate is Niger with a birth rate of 46.08
+The country with the lowest birth rate is Monaco with a birth rate of 5.9
 
-The Country with the highest life expectancy is San Marino with an expectancy of 85.4
-
-Global average percentage of forested area: 31.89%
-
+Primary Education enrollment rate
 Average primary education enrollment rate: 102.45%
-
 Country with the highest primary education enrollment rate: Madagascar with an rate of 142.5%
 Country with the lowest primary education enrollment rate: Somalia with a rate of 23.4%
+
+Tertiary Education enrollment rate
+Average primary education enrollment rate: 38.10%
+Country with the highest primary education enrollment rate: Greece with an rate of 136.6%
+Country with the lowest primary education enrollment rate: Malawi with a rate of 0.8%
+
+Official languages
+The top 3 widely spoken languages in the world are:
+English    31
+French     25
+Spanish    19
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 Analysis of how GDP per capita are related and influence to some other indicators:
 
+Average life expectancy in countries with higher GDP per capita: 82
+Average life expectancy in countries with lower GDP per capita: 62
 Average unemployment rate in countries with higher GDP per capita: 4.96%
 Average unemployment rate in countries with lower GDP per capita: 5.06%
 Average tax revenue percentage in countries with higher GDP per capita: 20.86%
 Average tax revenue percentage in countries with lower GDP per capita: 10.88%
 Average total tax rate percentage in countries with higher GDP per capita: 31.91%
 Average total tax rate percentage in countries with lower GDP per capita: 47.31%
-Average life expectancy in countries with higher GDP per capita: 81.98571428571428
-Average life expectancy in countries with lower GDP per capita: 61.6125
 
- 
 Note 1: Life expectancy in countries with the highest GDP per capita is, on average, 20 years higher than in countries with the lowest GDP.
 
 Note 2: CPI in countries with higher GDP in the range of 100 to 120, while countries with lower

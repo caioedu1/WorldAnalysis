@@ -44,17 +44,27 @@ def send_email(emails):
 
 
 def data_clean(df):
+    """Set float to 2 decimal places"""
     pd.options.display.float_format = "{:.2f}".format
 
+    """Some countries has this weird symbol � in its name, so I decided 
+    to pass the full row of all these countries to Null (None)"""
     df.loc[df["Country"].str.contains("�", na=False), :] = None
 
-    df = df.rename(columns={"Agricultural Land( %)": "Agricultural Land (%)"})
+
+    """Renaming columns"""
     df = df.rename(
         columns={
+            "Agricultural Land( %)": "Agricultural Land (%)",
             "Population: Labor force participation (%)": "Labor force participation (%)"
         }
     )
 
+    
+    """Passing columns to numeric and cleaning values"""
+    df["Out of pocket health expenditure"] = pd.to_numeric(
+        df["Out of pocket health expenditure"].str.replace("%", "")
+    )
     df["Labor force participation (%)"] = pd.to_numeric(
         df["Labor force participation (%)"].str.replace("%", "")
     )
@@ -63,7 +73,7 @@ def data_clean(df):
     )
     df["GDP"] = pd.to_numeric(
         df["GDP"].str.replace("[\$,]", "", regex=True).astype(float)
-    ).dropna()
+    )
     df["Armed Forces size"] = pd.to_numeric(
         df["Armed Forces size"].str.replace('"', "").str.replace(",", "")
     )
@@ -96,5 +106,9 @@ def data_clean(df):
         / 100
     )
     df["Co2-Emissions"] = pd.to_numeric(df["Co2-Emissions"].str.replace(",", ""))
+    
+    """Add some important columns"""
+    df["CO2-Emissions/person"] = df["Population"] / df["Co2-Emissions"]
+    df["GDP per capita"] = df["GDP"] / df["Population"]
 
     return df
