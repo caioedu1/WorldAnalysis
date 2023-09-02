@@ -1,24 +1,46 @@
+Some general analysis
+Average world population density: 134.0
+
+The Country with the smallest Armed Forces is Antigua and Barbuda with an Armed Force of literally 0.0
+
+Average birth rate: 20.15
+
+The Country with the highest life expectancy is San Marino with an expectancy of 85.4
+
+Global average percentage of forested area: 31.89%
+
+Average primary education enrollment rate: 102.45%
+
+Country with the highest primary education enrollment rate: Madagascar with an rate of 142.5%
+Country with the lowest primary education enrollment rate: Somalia with a rate of 23.4%
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Analysis of how GDP per capita are related and influence to some other indicators:
+
 Average unemployment rate in countries with higher GDP per capita: 4.96%
 Average unemployment rate in countries with lower GDP per capita: 5.06%
 Average tax revenue percentage in countries with higher GDP per capita: 20.86%
 Average tax revenue percentage in countries with lower GDP per capita: 10.88%
 Average total tax rate percentage in countries with higher GDP per capita: 31.91%
 Average total tax rate percentage in countries with lower GDP per capita: 47.31%
+Average life expectancy in countries with higher GDP per capita: 81.98571428571428
+Average life expectancy in countries with lower GDP per capita: 61.6125
 
-Observação 1: Expectativa de vida nos países com maior pib per capita em média 20 anos maior do que países menor pib.
+ 
+Note 1: Life expectancy in countries with the highest GDP per capita is, on average, 20 years higher than in countries with the lowest GDP.
 
-Observação 2: CPI nos países maior pib na faixa de 100 a 120, enquanto países menor pib tem uma variação maior,
-de 100 até 1344 no caso do Sudão. 
+Note 2: CPI in countries with higher GDP in the range of 100 to 120, while countries with lower
+GDP has a wider range, from 100 to 1344 in Sudan's case.
 
-Observação 3: Um fato interessante é o de que países com menores níveis de pib per capita 
-possuem uma taxa de desemprego média menor do que a taxa de desemprego média dos países com maiores níveis de
-pib per capita.
+Note 3: An interesting fact is that countries with lower levels of GDP per capita
+have an average unemployment rate lower than the average unemployment rate of countries with higher levels of
+GDP per capita.
 
-Observação 4: Observamos que países com maiores PIB per capita capturam quase o dobro de impostos do que os países
-com menores PIB per capita. 
+Note 4: We observe that countries with higher GDP per capita capture almost twice as much taxes as countries
+with lower GDP per capita.
 
-Observação 5: Países com maiores PIB per capita possuem menores níveis de impostos em cima de empresas, 
-enquanto países com menores PIB per capita possuem menos níveis de impostos em empresas.
+Note 5: Countries with higher per capita GDP have lower corporate tax levels,
+while countries with lower GDP per capita have lower levels of corporate taxes.
 
-Observação 6: Outra coisa que podemos observar é que a maioria dos países com menores PIB per capita estão 
-localizados no continente africano, enquanto os países com maiores PIB estão, em sua maioria, na Europa/Ocidente.
+Note 6: Another thing we can observe is that most of the countries with the lowest GDP per capita are
+located in the African continent, while the countries with the highest GDP are mainly in Europe/West.

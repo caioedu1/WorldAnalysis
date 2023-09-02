@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import locale
 from create_index import QOLindex
-from functions import data_clean, send_email
+from functions import data_clean
 import plotly.express as px
 
 """Database links:
@@ -27,11 +27,109 @@ df.to_excel("world-data-2023.xlsx", index=False)
 
 df["CO2-Emissions/person"] = df["Population"] / df["Co2-Emissions"]
 
-# Task 1: Calculate the average world population density.
-avg_dens = df["Density (P/Km2)"].mean()
-print(f"Average world population density: {avg_dens:.1f}")
+"""General informations"""
+def general_info():
+    
+    """Task 1: Calculate the average world population density."""
+    avg_dens = df["Density (P/Km2)"].mean()
 
-"""Task 2: Identify the top 5 countries with the highest GDP (Gross Domestic Product).
+    
+    """Task 2: Identify the country with the smallest Armed Forces."""
+    smallestAF = df["Armed Forces size"].min()
+    smallestAF_idx = df["Armed Forces size"].idxmin()
+    country_smallest_AF = df.loc[smallestAF_idx, "Country"]
+
+    """Task 3: Calculate the average birth rate."""
+    avg_birth_rate = df["Birth Rate"].mean()
+
+
+    """Task 4: Find the country with the highest life expectancy."""
+    highest_life_expectancy = df["Life expectancy"].max()
+    country_highest_LE = df.loc[
+        df["Life expectancy"] == highest_life_expectancy, "Country"
+    ].iloc[0]
+
+
+    """Task 5: Calculate the average percentage of forest area."""
+    avg_forested_area = df["Forested Area (%)"].mean()
+
+
+    """Task 6: Find the country with the highest primary school enrollment rate,
+    the country with the lowest primary school enrollment rate,
+    and the avg primary school enrollment rate."""
+    avg_primary_education = df["Gross primary education enrollment (%)"].mean()
+    highest_primary_education = df["Gross primary education enrollment (%)"].max()
+    lowest_primary_education = df["Gross primary education enrollment (%)"].min()
+    highest_PE_idx = df["Gross primary education enrollment (%)"].idxmax()
+    lowest_PE_idx = df["Gross primary education enrollment (%)"].idxmin()
+    high_countries_PE = df.loc[highest_PE_idx, "Country"]
+    low_countries_PE = df.loc[lowest_PE_idx, "Country"]
+    
+    
+    """Task 10: Make a full analysis of how GDP per capita is related with unemployement rate, 
+    life expectancy, CPI and others indicators."""
+    df["GDP per capita"] = df["GDP"] / df["Population"]
+    less_GDPpercapita = df[df["GDP per capita"] < 700]
+    sort_less_GDPpc = less_GDPpercapita.sort_values(by="GDP per capita", ascending=True)
+    high_GDPpercapita = df[df["GDP per capita"] > 50000]
+    sort_high_GDPpc = high_GDPpercapita.sort_values(by="GDP per capita", ascending=True)
+
+    highGDPpc_AVGunemployement = sort_high_GDPpc["Unemployment rate"].mean()
+    lowerGDPpc_AVGunemployement = sort_less_GDPpc["Unemployment rate"].mean()
+    highGDPpc_AVGtaxrevenue = sort_high_GDPpc["Tax revenue (%)"].mean()
+    lowerGDPpc_AVGtaxrevenue = sort_less_GDPpc["Tax revenue (%)"].mean()
+    highGDPpc_AVGtotaltax = sort_high_GDPpc["Total tax rate"].mean()
+    lowerGDPpc_AVGtotaltax = sort_less_GDPpc["Total tax rate"].mean()
+    highGDPpc_AVGle = sort_high_GDPpc["Life expectancy"].mean()
+    lowerGDPpc_AVGle = sort_less_GDPpc["Life expectancy"].mean()
+    
+    """Write all the informations in analysis.txt"""
+    content = f"""Some general analysis
+Average world population density: {avg_dens:.1f}\n
+The Country with the smallest Armed Forces is {country_smallest_AF} with an Armed Force of literally {smallestAF}\n
+Average birth rate: {avg_birth_rate:.2f}\n
+The Country with the highest life expectancy is {country_highest_LE} with an expectancy of {highest_life_expectancy}\n
+Global average percentage of forested area: {avg_forested_area:.2f}%\n
+Average primary education enrollment rate: {avg_primary_education:.2f}%\n
+Country with the highest primary education enrollment rate: {high_countries_PE} with an rate of {highest_primary_education}%
+Country with the lowest primary education enrollment rate: {low_countries_PE} with a rate of {lowest_primary_education}%
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Analysis of how GDP per capita are related and influence to some other indicators:
+
+Average unemployment rate in countries with higher GDP per capita: {highGDPpc_AVGunemployement:.2f}%
+Average unemployment rate in countries with lower GDP per capita: {lowerGDPpc_AVGunemployement:.2f}%
+Average tax revenue percentage in countries with higher GDP per capita: {highGDPpc_AVGtaxrevenue:.2f}%
+Average tax revenue percentage in countries with lower GDP per capita: {lowerGDPpc_AVGtaxrevenue:.2f}%
+Average total tax rate percentage in countries with higher GDP per capita: {highGDPpc_AVGtotaltax:.2f}%
+Average total tax rate percentage in countries with lower GDP per capita: {lowerGDPpc_AVGtotaltax:.2f}%
+Average life expectancy in countries with higher GDP per capita: {highGDPpc_AVGle}
+Average life expectancy in countries with lower GDP per capita: {lowerGDPpc_AVGle}
+
+Note 1: Life expectancy in countries with the highest GDP per capita is, on average, 20 years higher than in countries with the lowest GDP.
+
+Note 2: CPI in countries with higher GDP in the range of 100 to 120, while countries with lower
+GDP has a wider range, from 100 to 1344 in Sudan's case.
+
+Note 3: An interesting fact is that countries with lower levels of GDP per capita
+have an average unemployment rate lower than the average unemployment rate of countries with higher levels of
+GDP per capita.
+
+Note 4: We observe that countries with higher GDP per capita capture almost twice as much taxes as countries
+with lower GDP per capita.
+
+Note 5: Countries with higher per capita GDP have lower corporate tax levels,
+while countries with lower GDP per capita have lower levels of corporate taxes.
+
+Note 6: Another thing we can observe is that most of the countries with the lowest GDP per capita are
+located in the African continent, while the countries with the highest GDP are mainly in Europe/West.
+"""
+    with open("analysis.txt", "r") as read:
+        if not content in read:
+            with open("analysis.txt", "a") as f:
+                f.write(content)
+general_info()
+"""Task 1: Identify the top 5 countries with the highest GDP (Gross Domestic Product).
 Create a table of these countries containing gross primary education enrollment, unemployment rate,
 labor force participation, CPI and life expectancy."""
 high_gdp = df.sort_values(by="GDP", ascending=False).head(5)
@@ -50,7 +148,7 @@ high_gdp = high_gdp[
 # country_highGDP = high_gdp["Country"]
 gdp_highGDP = high_gdp["GDP"]
 # print(
-#     f"The Country with the highest GDP is {country_highGDP} with a GDP of {usd_gdp}"
+#     f"The top 5 Countries with the highest GDP are {country_highGDP} with a GDP of {usd_gdp}"
 # )
 
 
@@ -93,58 +191,12 @@ def top5GDP_info():
 
 top5GDP_info()
 
-# Task 3: Identify the country with the smallest Armed Forces.
-smallestAF = df["Armed Forces size"].min()
-smallestAF_idx = df["Armed Forces size"].idxmin()
-country_smallest_AF = df.loc[smallestAF_idx, "Country"]
-print(
-    f"The Country with the smallest Armed Forces is {country_smallest_AF} with an Armed Force of literally {smallestAF}!"
-)
-
-# Task 4: Calculate the average birth rate.
-avg_birth_rate = df["Birth Rate"].mean()
-print(f"Average birth rate: {avg_birth_rate:.2f}")
-
-# Task 5: Find the country with the highest life expectancy.
-highest_life_expectancy = df["Life expectancy"].max()
-country_highest_LE = df.loc[
-    df["Life expectancy"] == highest_life_expectancy, "Country"
-].iloc[0]
-print(
-    f"The Country with the highest life expectancy is {country_highest_LE} with an expectancy of {highest_life_expectancy}"
-)
-
-# Task 6: Calculate the average percentage of forest area.
-avg_forested_area = df["Forested Area (%)"].mean()
-print(f"Global average percentage of forested area: {avg_forested_area:.2f}%")
-print("-" * 100)
-
-# Task 7: Find the country with the highest primary school enrollment rate,
-# the country with the lowest primary school enrollment rate,
-# and the avg primary school enrollment rate.
-avg_primary_education = df["Gross primary education enrollment (%)"].mean()
-highest_primary_education = df["Gross primary education enrollment (%)"].max()
-lowest_primary_education = df["Gross primary education enrollment (%)"].min()
-highest_PE_idx = df["Gross primary education enrollment (%)"].idxmax()
-lowest_PE_idx = df["Gross primary education enrollment (%)"].idxmin()
-high_countries_PE = df.loc[highest_PE_idx, "Country"]
-low_countries_PE = df.loc[lowest_PE_idx, "Country"]
-
-print(f"Average primary education enrollment rate: {avg_primary_education:.2f}%")
-print(
-    f"Country with the highest primary education enrollment rate: {high_countries_PE} with an rate of {highest_primary_education}%"
-)
-print(
-    f"Country with the lowest primary education enrollment rate: {low_countries_PE} with a rate of {lowest_primary_education}%"
-)
-print("-" * 100)
 
 """Task 8: Identify the top 5 countries with the highest inflation rates and
 the top 5 countries with the lowest inflation rates.
 Also, get the CPI Change (%) of all countries that match those queries."""
 cpi_analysis = df[["Country", "CPI", "CPI Change (%)"]]
 sort_cpi_analysis = cpi_analysis.sort_values(by="CPI", ascending=True)
-"""Drop null values"""
 sort_cpi_analysis = sort_cpi_analysis.dropna(subset=["Country", "CPI"])
 
 print(
@@ -251,58 +303,6 @@ def show_urbanPopulation():
 show_urbanPopulation()
 
 
-"""Task 10: Add GDP per capita column.
-Make a full analysis of how unemployement rate, GDP, GDP per capita,
-life expectancy, CPI and other indicators are correlated."""
-df["GDP per capita"] = df["GDP"] / df["Population"]
-less_GDPpercapita = df[df["GDP per capita"] < 700]
-sort_less_GDPpc = less_GDPpercapita.sort_values(by="GDP per capita", ascending=True)
-select_columns = [
-    "Country",
-    "Unemployment rate",
-    "GDP",
-    "GDP per capita",
-    "Life expectancy",
-    "CPI",
-    "Tax revenue (%)",
-    "Total tax rate",
-]
-print(sort_less_GDPpc[select_columns].reset_index(drop=True))
-print("\n\n")
-
-high_GDPpercapita = df[df["GDP per capita"] > 50000]
-sort_high_GDPpc = high_GDPpercapita.sort_values(by="GDP per capita", ascending=True)
-print(sort_high_GDPpc[select_columns].reset_index(drop=True))
-print()
-
-highGDPpc_AVGunemployement = sort_high_GDPpc["Unemployment rate"].mean()
-print(
-    f"Average unemployment rate in countries with higher GDP per capita: {highGDPpc_AVGunemployement:.2f}%"
-)
-lowerGDPpc_AVGunemployement = sort_less_GDPpc["Unemployment rate"].mean()
-print(
-    f"Average unemployment rate in countries with lower GDP per capita: {lowerGDPpc_AVGunemployement:.2f}%"
-)
-
-highGDPpc_AVGtaxrevenue = sort_high_GDPpc["Tax revenue (%)"].mean()
-print(
-    f"Average tax revenue percentage in countries with higher GDP per capita: {highGDPpc_AVGtaxrevenue:.2f}%"
-)
-lowerGDPpc_AVGtaxrevenue = sort_less_GDPpc["Tax revenue (%)"].mean()
-print(
-    f"Average tax revenue percentage in countries with lower GDP per capita: {lowerGDPpc_AVGtaxrevenue:.2f}%"
-)
-
-highGDPpc_AVGtotaltax = sort_high_GDPpc["Total tax rate"].mean()
-print(
-    f"Average total tax rate percentage in countries with higher GDP per capita: {highGDPpc_AVGtotaltax:.2f}%"
-)
-lowerGDPpc_AVGtotaltax = sort_less_GDPpc["Total tax rate"].mean()
-print(
-    f"Average total tax rate percentage in countries with lower GDP per capita: {lowerGDPpc_AVGtotaltax:.2f}%"
-)
-print("-" * 100)
-
 
 """Task 11: Create a bar plot that demonstrates the total tax rate (TTR)
 of the 10 countries with highest GDP."""
@@ -330,7 +330,7 @@ def TTR_plot():
 
 TTR_plot()
 
-"""Create a scatter graph that shows the relationship between Forested Area and Co2-Emissions."""
+"""Task 12: Create a scatter graph that shows the relationship between Forested Area and Co2-Emissions."""
 max_x_value = 100
 max_y_value = 10000000
 
