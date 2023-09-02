@@ -17,7 +17,9 @@ def send_email(emails):
         mail = outlook.CreateItem(0)
         mail.To = ";".join(emails)
         mail.Subject = "Requested Files"
-        mail.HTMLBody = '<h2> Files based on the analysis of "world-data-2023.csv" </h2>'
+        mail.HTMLBody = (
+            '<h2> Files based on the analysis of "world-data-2023.csv" </h2>'
+        )
 
         """As this program was created so that I can do a complete analysis of the dataframe,
         the folder path is personal."""
@@ -42,7 +44,15 @@ def data_clean(df):
     df.loc[df["Country"].str.contains("�", na=False), :] = None
 
     df = df.rename(columns={"Agricultural Land( %)": "Agricultural Land (%)"})
+    df = df.rename(
+        columns={
+            "Population: Labor force participation (%)": "Labor force participation (%)"
+        }
+    )
 
+    df["Labor force participation (%)"] = pd.to_numeric(
+        df["Labor force participation (%)"].str.replace("%", "")
+    )
     df["Density (P/Km2)"] = pd.to_numeric(
         df.iloc[:, 1].str.replace('"', "").str.replace(" ", "").str.replace(",", ".")
     )

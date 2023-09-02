@@ -3,13 +3,14 @@ import pandas as pd
 import locale
 from create_index import QOLindex
 from functions import data_clean, send_email
+import plotly.express as px
 
-# Database links:
-# https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023
-# obs: data may not be 100% accurate, but the main purpose of this project is just show my abilities in data analysis,
-# so any information extracted is exclusively based in this database.
+"""Database links:
+https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023
+obs: data may not be 100% accurate, but the main purpose of this project is just show my abilities in data analysis,
+so any information extracted is exclusively based in this database."""
 
-# world-data-2023.csv analysis
+"""world-data-2023.csv analysis"""
 # configure locale
 locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
@@ -30,14 +31,67 @@ df["CO2-Emissions/person"] = df["Population"] / df["Co2-Emissions"]
 avg_dens = df["Density (P/Km2)"].mean()
 print(f"Average world population density: {avg_dens:.1f}")
 
-# Task 2: Identify the country with the highest GDP (Gross Domestic Product).
-high_gdp_idx = df["GDP"].idxmax()
-country_high_gdp = df.loc[high_gdp_idx, "Country"]
-high_gdp = df.loc[high_gdp_idx, "GDP"]
-high_gdpF = locale.currency(high_gdp, grouping=True)
-print(
-    f"The Country with the highest GDP is {country_high_gdp} with a GDP of {high_gdpF}"
-)
+"""Task 2: Identify the top 5 countries with the highest GDP (Gross Domestic Product).
+Create a table of these countries containing gross primary education enrollment, unemployment rate,
+labor force participation, CPI and life expectancy."""
+high_gdp = df.sort_values(by="GDP", ascending=False).head(5)
+high_gdp["GDP"] = high_gdp["GDP"].apply(lambda x: locale.currency(x, grouping=True))
+high_gdp = high_gdp[
+    [
+        "Country",
+        "GDP",
+        "Life expectancy",
+        "CPI",
+        "Labor force participation (%)",
+        "Unemployment rate",
+        "Gross primary education enrollment (%)",
+    ]
+]
+# country_highGDP = high_gdp["Country"]
+gdp_highGDP = high_gdp["GDP"]
+# print(
+#     f"The Country with the highest GDP is {country_highGDP} with a GDP of {usd_gdp}"
+# )
+
+
+def top5GDP_info():
+    fig, ax = plt.subplots(figsize=(25, 15))
+    ax.axis("off")
+
+    cell_text = high_gdp.values.tolist()
+    for row in cell_text:
+        del row[0]
+    name_mapping = {"Gross primary education enrollment (%)": "GPEE (%)"}
+    columns = [name_mapping.get(col, col) for col in high_gdp.columns]
+    columns.remove("Country")
+    rows = high_gdp["Country"].tolist()
+
+    table = plt.table(
+        cellText=cell_text,
+        rowLabels=rows,
+        colLabels=columns,
+        loc="center",
+        edges="closed",
+        cellLoc="center",
+    )
+    table.auto_set_font_size(False)
+    table.set_fontsize(15)
+
+    for (row, col), cell in table.get_celld().items():
+        if row == 0:
+            cell.set_fontsize(17)
+        cell.set_width(0.175)
+        cell.set_height(0.12)
+        cell.set_linewidth(0.5)
+    plt.savefig(
+        r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\top5GDPinfo.png",
+        format="png",
+        dpi=300,
+    )
+    plt.close()
+
+
+top5GDP_info()
 
 # Task 3: Identify the country with the smallest Armed Forces.
 smallestAF = df["Armed Forces size"].min()
@@ -56,7 +110,7 @@ highest_life_expectancy = df["Life expectancy"].max()
 country_highest_LE = df.loc[
     df["Life expectancy"] == highest_life_expectancy, "Country"
 ].iloc[0]
-print(  
+print(
     f"The Country with the highest life expectancy is {country_highest_LE} with an expectancy of {highest_life_expectancy}"
 )
 
@@ -93,9 +147,14 @@ sort_cpi_analysis = cpi_analysis.sort_values(by="CPI", ascending=True)
 """Drop null values"""
 sort_cpi_analysis = sort_cpi_analysis.dropna(subset=["Country", "CPI"])
 
-print(f"CPI Change (%) of all countries with an inflation rate higher than 300:\n{sort_cpi_analysis.head(5)}")
-print(f"CPI Change (%) of all countries with an inflation rate lower than 100:\n{sort_cpi_analysis.head(-5)}")
-print("-"*100)
+print(
+    f"CPI Change (%) of all countries with an inflation rate higher than 300:\n{sort_cpi_analysis.head(5)}"
+)
+print(
+    f"CPI Change (%) of all countries with an inflation rate lower than 100:\n{sort_cpi_analysis.head(-5)}"
+)
+print("-" * 100)
+
 
 def show_inflation_rate():
     plt.figure(figsize=(10, 6))
@@ -103,7 +162,7 @@ def show_inflation_rate():
     plt.bar(sort_cpi_analysis["Country"].head(5), sort_cpi_analysis["CPI"].head(5))
     plt.xlabel("Country", fontsize=10)
     plt.ylabel("CPI", fontsize=10)
-    plt.xticks(rotation=75) 
+    plt.xticks(rotation=75)
     plt.title("Countries with low inflation rate", fontsize=14)
 
     plt.subplot(1, 2, 2)
@@ -112,10 +171,15 @@ def show_inflation_rate():
     plt.ylabel("CPI", fontsize=10)
     plt.xticks(rotation=75)
     plt.title("Countries with high inflation rate", fontsize=14)
-    
+
     plt.subplots_adjust(hspace=0.5, wspace=0.5)
     plt.tight_layout()
-    plt.savefig(r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\inflation_rates.png", format="png", dpi=300)
+    plt.savefig(
+        r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\inflation_rates.png",
+        format="png",
+        dpi=300,
+    )
+    plt.close()
 
 
 show_inflation_rate()
@@ -176,7 +240,12 @@ def show_urbanPopulation():
 
     plt.subplots_adjust(hspace=0.5, wspace=0.5)
     plt.tight_layout()
-    plt.savefig(r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\urban_populations.png", format="png", dpi=300)
+    plt.savefig(
+        r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\urban_populations.png",
+        format="png",
+        dpi=300,
+    )
+    plt.close()
 
 
 show_urbanPopulation()
@@ -235,10 +304,11 @@ print(
 print("-" * 100)
 
 
-"""Task 11: Create a bar plot that demonstrates the total tax rate (TTR) 
+"""Task 11: Create a bar plot that demonstrates the total tax rate (TTR)
 of the 10 countries with highest GDP."""
 gdp10sorted = df.sort_values(by="GDP", ascending=False)
 ten_highest_gdp = gdp10sorted[["Country", "Total tax rate"]].head(10)
+
 
 def TTR_plot():
     plt.figure(figsize=(10, 6))
@@ -250,8 +320,56 @@ def TTR_plot():
 
     plt.subplots_adjust(hspace=0.5, wspace=0.5)
     plt.tight_layout()
-    plt.savefig(r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\TTRinCountriesHighestGDP.png", format="png", dpi=300)
-    
+    plt.savefig(
+        r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\TTRinCountriesHighestGDP.png",
+        format="png",
+        dpi=300,
+    )
+    plt.close()
+
+
 TTR_plot()
 
+"""Create a scatter graph that shows the relationship between Forested Area and Co2-Emissions."""
+max_x_value = 100
+max_y_value = 10000000
 
+"""Plot image to png file"""
+
+
+def forest_co2_plot_png():
+    plt.figure(figsize=(10, 6))
+    scatter = plt.scatter(df["Forested Area (%)"], df["Co2-Emissions"])
+    plt.xlim(0, max_x_value)
+    plt.ylim(0, max_y_value)
+    plt.xlabel("Forested Area (%)", fontsize=10)
+    plt.ylabel("CO2 Emissions", fontsize=10)
+
+    plt.savefig(
+        r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\forest_co2_plot.png",
+        format="png",
+        dpi=300,
+    )
+
+
+"""Plot to an interactive html file. CS50.ai, or the famous DuckDebugger, helped me with the interactivity"""
+
+
+def forest_co2_plot_png():
+    plt.figure(figsize=(10, 6))
+    fig = px.scatter(
+        df, x="Forested Area (%)", y="Co2-Emissions", hover_data=["Country"]
+    )
+    plt.xlim(0, max_x_value)
+    plt.ylim(0, max_y_value)
+    plt.xlabel("Forested Area (%)", fontsize=10)
+    plt.ylabel("CO2 Emissions", fontsize=10)
+
+    fig.write_html(
+        r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\forest_co2_plot.html"
+    )
+    plt.close()
+
+
+forest_co2_plot_png()
+plt.show()

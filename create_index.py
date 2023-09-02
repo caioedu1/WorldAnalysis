@@ -114,14 +114,19 @@ def QOLindex(country):
                         country_row.loc[
                             :, "Gross tertiary education enrollment (%)"
                         ].item()
-                        > 70
+                        >= 75
                     ):
                         points += 5
                     elif (
                         country_row.loc[
                             :, "Gross primary education enrollment (%)"
                         ].item()
-                        >= 95
+                        >= 95 and (
+                            country_row.loc[
+                                :, "Gross tertiary education enrollment (%)"
+                            ].item()
+                            > 60
+                        )
                     ):
                         points += 3
 
@@ -130,7 +135,7 @@ def QOLindex(country):
                         country_row.loc[
                             :, "Gross primary education enrollment (%)"
                         ].item()
-                        < 100
+                        < 95
                     ):
                         points -= 3
                     elif (
@@ -227,4 +232,4 @@ def QOLindex(country):
 
     else:
         raise TypeError("Country must be a string or a list of strings")
-
+    
