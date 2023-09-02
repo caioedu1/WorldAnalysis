@@ -2,6 +2,8 @@ import win32com.client as win32
 import os
 import pandas as pd
 
+"""Automatically send emails with the plot figures"""
+
 
 def send_email(emails):
     # Check if emails is a list of strings
@@ -12,32 +14,35 @@ def send_email(emails):
     ):
         if not isinstance(emails, list):
             emails = [emails]
+        try:
+            outlook = win32.Dispatch("outlook.application")
+            mail = outlook.CreateItem(0)
+            mail.To = ";".join(emails)
+            mail.Subject = "Requested Files"
+            mail.HTMLBody = (
+                '<h2> Files based on the analysis of "world-data-2023.csv" </h2>'
+            )
 
-        outlook = win32.Dispatch("outlook.application")
-        mail = outlook.CreateItem(0)
-        mail.To = ";".join(emails)
-        mail.Subject = "Requested Files"
-        mail.HTMLBody = (
-            '<h2> Files based on the analysis of "world-data-2023.csv" </h2>'
-        )
+            folder = r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs"
 
-        """As this program was created so that I can do a complete analysis of the dataframe,
-        the folder path is personal."""
-        folder = r"C:\\Users\\Caioe\\Desktop\\Caio\\Learn Coding\\html e css\\HarvardCS50\\plot_figs"
+            attachment_list = []
+            for root, dirs, files in os.walk(folder):
+                for arquivo in files:
+                    full_path = os.path.join(root, arquivo)
+                    attachment = mail.Attachments.Add(full_path)
+                    attachment_list.append(attachment)
 
-        attachment_list = []
-        for root, dirs, files in os.walk(folder):
-            for arquivo in files:
-                caminho_completo = os.path.join(root, arquivo)
-                attachment = mail.Attachments.Add(caminho_completo)
-                attachment_list.append(attachment)
-
-        mail.Send()
-
-        print("Email sent successfully!")
+            mail.Send()
+            print("Email sent.")
+        except Exception as e:
+            print(f"An error has occurred: {str(e)}")
+    else:
+        raise TypeError("Emails must be a string or a list of strings")
 
 
-# Data Clean
+"""Data Clean"""
+
+
 def data_clean(df):
     pd.options.display.float_format = "{:.2f}".format
 
