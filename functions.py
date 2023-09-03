@@ -47,20 +47,18 @@ def data_clean(df):
     """Set float to 2 decimal places"""
     pd.options.display.float_format = "{:.2f}".format
 
-    """Some countries has this weird symbol � in its name, so I decided 
+    """Some countries has this weird symbol � in its name, so I decided
     to pass the full row of all these countries to Null (None)"""
     df.loc[df["Country"].str.contains("�", na=False), :] = None
-
 
     """Renaming columns"""
     df = df.rename(
         columns={
             "Agricultural Land( %)": "Agricultural Land (%)",
-            "Population: Labor force participation (%)": "Labor force participation (%)"
+            "Population: Labor force participation (%)": "Labor force participation (%)",
         }
     )
 
-    
     """Passing columns to numeric and cleaning values"""
     df["Out of pocket health expenditure"] = pd.to_numeric(
         df["Out of pocket health expenditure"].str.replace("%", "")
@@ -106,7 +104,7 @@ def data_clean(df):
         / 100
     )
     df["Co2-Emissions"] = pd.to_numeric(df["Co2-Emissions"].str.replace(",", ""))
-    
+
     """Add some important columns"""
     df["CO2-Emissions/person"] = df["Population"] / df["Co2-Emissions"]
     df["GDP per capita"] = df["GDP"] / df["Population"]

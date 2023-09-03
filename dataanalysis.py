@@ -18,6 +18,7 @@ locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 data = "world-data-2023.csv"
 read_data = pd.read_csv(data)
 df = pd.DataFrame(read_data)
+
 # Data Clean
 df = data_clean(df)
 
@@ -26,8 +27,9 @@ df.to_excel("world-data-2023.xlsx", index=False)
 
 
 """General informations"""
+
+
 def general_info():
-    
     """Task 1: Identify the country with the highest density, the country with the lowest density and
     the average world population density"""
     max_dens = df["Density (P/Km2)"].max()
@@ -35,17 +37,22 @@ def general_info():
     country_high_dens = df.loc[df["Density (P/Km2)"].idxmax(), "Country"]
     country_low_dens = df.loc[df["Density (P/Km2)"].idxmin(), "Country"]
     avg_dens = df["Density (P/Km2)"].mean()
-    
-    
-    """Task 2: Identify the top 5 countries with the highest armed forces, and 
+
+    """Task 2: Identify the top 5 countries with the highest armed forces, and
     the top 5 countries with the lowest armed forces"""
-    
+
     smallestAF = df.sort_values(by="Armed Forces size", ascending=True).dropna().head(5)
-    countries_smallest_AF = smallestAF[["Country", "Armed Forces size"]].reset_index(drop=True)
-    countries_smallest_AF.index += 1
-    highestAF = df.sort_values(by="Armed Forces size", ascending=False).dropna(subset=["Armed Forces size"]).head(5)
-    countries_highest_AF = highestAF[["Country", "Armed Forces size"]].reset_index(drop=True)
-    countries_highest_AF.index += 1
+    countries_smallest_AF = smallestAF[["Country", "Armed Forces size"]].reset_index(
+        drop=True
+    )
+    highestAF = (
+        df.sort_values(by="Armed Forces size", ascending=False)
+        .dropna(subset=["Armed Forces size"])
+        .head(5)
+    )
+    countries_highest_AF = highestAF[["Country", "Armed Forces size"]].reset_index(
+        drop=True
+    )
 
     """Task 3: Find the country with the highest birth rate, the country with the lowest birth rate and
     the average world birth rate"""
@@ -55,15 +62,18 @@ def general_info():
     country_low_br = df.loc[df["Birth Rate"].idxmin(), "Country"]
     avg_birth_rate = df["Birth Rate"].mean()
 
-
     """Task 4: Find the country with the highest primary school enrollment rate,
     the country with the lowest primary school enrollment rate,
     and the avg primary school enrollment rate."""
     avg_primary_education = df["Gross primary education enrollment (%)"].mean()
     highest_primary_education = df["Gross primary education enrollment (%)"].max()
     lowest_primary_education = df["Gross primary education enrollment (%)"].min()
-    high_countries_PE = df.loc[df["Gross primary education enrollment (%)"].idxmax(), "Country"]
-    low_countries_PE = df.loc[df["Gross primary education enrollment (%)"].idxmin(), "Country"]
+    high_countries_PE = df.loc[
+        df["Gross primary education enrollment (%)"].idxmax(), "Country"
+    ]
+    low_countries_PE = df.loc[
+        df["Gross primary education enrollment (%)"].idxmin(), "Country"
+    ]
 
     """Task 5: Find the country with the highest tertiary school enrollment rate,
     the country with the lowest tertiary school enrollment rate,
@@ -71,46 +81,132 @@ def general_info():
     avg_tertiary_education = df["Gross tertiary education enrollment (%)"].mean()
     highest_tertiary_education = df["Gross tertiary education enrollment (%)"].max()
     lowest_tertiary_education = df["Gross tertiary education enrollment (%)"].min()
-    high_countries_TE = df.loc[df["Gross tertiary education enrollment (%)"].idxmax(), "Country"]
-    low_countries_TE = df.loc[df["Gross tertiary education enrollment (%)"].idxmin(), "Country"]
-    
+    high_countries_TE = df.loc[
+        df["Gross tertiary education enrollment (%)"].idxmax(), "Country"
+    ]
+    low_countries_TE = df.loc[
+        df["Gross tertiary education enrollment (%)"].idxmin(), "Country"
+    ]
+
     """Task 6: Identify what is the top 3 most spoken language in the world."""
     spoken = df.groupby("Official language").size()
     top_languages = spoken.sort_values(ascending=False).head(3).to_string()
-    top_languages = '\n'.join(top_languages.split('\n')[1:])
-    
-    """Task 7: Make a full analysis of how GDP per capita is related with unemployement rate, 
-    life expectancy, CPI and others indicators."""
-    less_GDPpercapita = df[df["GDP per capita"] < 700]
-    sort_less_GDPpc = less_GDPpercapita.sort_values(by="GDP per capita", ascending=True)
-    high_GDPpercapita = df[df["GDP per capita"] > 50000]
-    sort_high_GDPpc = high_GDPpercapita.sort_values(by="GDP per capita", ascending=True)
+    top_languages = "\n".join(top_languages.split("\n")[1:])
 
-    highGDPpc_AVGunemployement = sort_high_GDPpc["Unemployment rate"].mean()
-    lowerGDPpc_AVGunemployement = sort_less_GDPpc["Unemployment rate"].mean()
-    highGDPpc_AVGtaxrevenue = sort_high_GDPpc["Tax revenue (%)"].mean()
-    lowerGDPpc_AVGtaxrevenue = sort_less_GDPpc["Tax revenue (%)"].mean()
-    highGDPpc_AVGtotaltax = sort_high_GDPpc["Total tax rate"].mean()
-    lowerGDPpc_AVGtotaltax = sort_less_GDPpc["Total tax rate"].mean()
-    highGDPpc_AVGle = sort_high_GDPpc["Life expectancy"].mean()
-    lowerGDPpc_AVGle = sort_less_GDPpc["Life expectancy"].mean()
-    
-    """Task 8: Find the average life expectancy of the country with the highest out of pocket health expenditure"""
-    # highOOPHE_avgLE = df.loc[df["Out of pocket health expenditure"].idxmax, "Life expectancy"]
-    
-    
+    """Task 7: Make a full analysis of how GDP per capita is related with unemployement rate,
+    life expectancy, CPI and others indicators."""
+    low_GDPpercapita = df[df["GDP per capita"] < 700]
+    low_GDPpercapita = low_GDPpercapita.sort_values(by="GDP per capita", ascending=True)
+    high_GDPpercapita = df[df["GDP per capita"] > 50000]
+    high_GDPpercapita = high_GDPpercapita.sort_values(
+        by="GDP per capita", ascending=True
+    )
+    lower_sel_GDPcols = (
+        low_GDPpercapita[
+            [
+                "Country",
+                "GDP per capita",
+                "Unemployment rate",
+                "Life expectancy",
+                "CPI",
+                "Total tax rate",
+                "Tax revenue (%)",
+            ]
+        ]
+        .reset_index(drop=True)
+        .head(15)
+    )
+    high_sel_GDPcols = (
+        high_GDPpercapita[
+            [
+                "Country",
+                "GDP per capita",
+                "Unemployment rate",
+                "Life expectancy",
+                "CPI",
+                "Total tax rate",
+                "Tax revenue (%)",
+            ]
+        ]
+        .reset_index(drop=True)
+        .head(15)
+    )
+
+    highGDPpc_AVGunemployement = high_GDPpercapita["Unemployment rate"].mean()
+    lowGDPpc_AVGunemployement = low_GDPpercapita["Unemployment rate"].mean()
+    highGDPpc_AVGtaxrevenue = high_GDPpercapita["Tax revenue (%)"].mean()
+    lowGDPpc_AVGtaxrevenue = low_GDPpercapita["Tax revenue (%)"].mean()
+    highGDPpc_AVGtotaltax = high_GDPpercapita["Total tax rate"].mean()
+    lowGDPpc_AVGtotaltax = low_GDPpercapita["Total tax rate"].mean()
+    highGDPpc_AVGle = high_GDPpercapita["Life expectancy"].mean()
+    lowGDPpc_AVGle = low_GDPpercapita["Life expectancy"].mean()
+    highGDPpc_AVGcpi = high_GDPpercapita["CPI"].mean()
+    lowGDPpc_AVGcpi = low_GDPpercapita["CPI"].mean()
+
+    """Task 8: Make a analysis of how OOPHE is related with life expectancy, infant mortality,
+    maternal mortality and fertility rate"""
+    lowOOPHE = df.loc[df["Out of pocket health expenditure"] < 20]
+    lowOOPHE = lowOOPHE.sort_values(
+        by="Out of pocket health expenditure", ascending=True
+    )
+    highOOPHE = df.loc[df["Out of pocket health expenditure"] > 50]
+    highOOPHE = highOOPHE.sort_values(
+        by="Out of pocket health expenditure", ascending=True
+    )
+
+    low_oophe_selected_cols_df = (
+        lowOOPHE[
+            [
+                "Country",
+                "Out of pocket health expenditure",
+                "Life expectancy",
+                "Infant mortality",
+                "Fertility Rate",
+                "Maternal mortality ratio",
+            ]
+        ]
+        .reset_index(drop=True)
+        .head(15)
+    )
+    high_oophe_selected_cols_df = (
+        highOOPHE[
+            [
+                "Country",
+                "Out of pocket health expenditure",
+                "Life expectancy",
+                "Infant mortality",
+                "Fertility Rate",
+                "Maternal mortality ratio",
+            ]
+        ]
+        .reset_index(drop=True)
+        .head(15)
+    )
+
+    highOOPHE_AVGlifeexpectancy = highOOPHE["Life expectancy"].mean()
+    lowOOPHE_AVGlifeexpectancy = lowOOPHE["Life expectancy"].mean()
+    highOOPHE_AVGinfantmortality = highOOPHE["Infant mortality"].mean()
+    lowOOPHE_AVGinfantmortality = lowOOPHE["Infant mortality"].mean()
+    highOOPHE_AVGmaternalmortality = highOOPHE["Maternal mortality ratio"].mean()
+    lowOOPHE_AVGmaternalmortality = lowOOPHE["Maternal mortality ratio"].mean()
+    highOOPHE_AVGfertilityrate = highOOPHE["Fertility Rate"].mean()
+    lowOOPHE_AVGfertilityrate = lowOOPHE["Fertility Rate"].mean()
+
+    """Configure df showing so it can be properly written in analysis.txt"""
+    pd.set_option("display.max_columns", None)
+    pd.set_option("display.width", None)
     """Write all the informations in analysis.txt"""
-    content = f"""General analysis of some indicators
-    
+    content = f"""Comprehensive Examination of Selected Indicators
+
 Population Density
 Average world population density: {avg_dens:.1f}
 The country with the highest population density is {country_high_dens} with a density of {max_dens}
 The country with the lowest population density is {country_low_dens} with a density of {min_dens}
 
 Armed Forces
-The top 5 countries with the highest Armed Forces are: 
+The top 5 countries with the highest Armed Forces are:
 {countries_highest_AF}
-The top 5 countries with the smallest Armed Forces are: 
+The top 5 countries with the smallest Armed Forces are:
 {countries_smallest_AF}
 
 Birth Rate
@@ -133,37 +229,86 @@ The top 3 widely spoken languages in the world are:
 {top_languages}
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
-Analysis of how GDP per capita are related and influence to some other indicators:
+An examination of the interrelation and influence of GDP per capita on various indicators
 
+Mean values of diverse indicators within nations characterized by high and low GDP per capita.
 Average life expectancy in countries with higher GDP per capita: {round(highGDPpc_AVGle)}
-Average life expectancy in countries with lower GDP per capita: {round(lowerGDPpc_AVGle)}
+Average life expectancy in countries with lower GDP per capita: {round(lowGDPpc_AVGle)}
 Average unemployment rate in countries with higher GDP per capita: {highGDPpc_AVGunemployement:.2f}%
-Average unemployment rate in countries with lower GDP per capita: {lowerGDPpc_AVGunemployement:.2f}%
+Average unemployment rate in countries with lower GDP per capita: {lowGDPpc_AVGunemployement:.2f}%
 Average tax revenue percentage in countries with higher GDP per capita: {highGDPpc_AVGtaxrevenue:.2f}%
-Average tax revenue percentage in countries with lower GDP per capita: {lowerGDPpc_AVGtaxrevenue:.2f}%
+Average tax revenue percentage in countries with lower GDP per capita: {lowGDPpc_AVGtaxrevenue:.2f}%
 Average total tax rate percentage in countries with higher GDP per capita: {highGDPpc_AVGtotaltax:.2f}%
-Average total tax rate percentage in countries with lower GDP per capita: {lowerGDPpc_AVGtotaltax:.2f}%
+Average total tax rate percentage in countries with lower GDP per capita: {lowGDPpc_AVGtotaltax:.2f}%
+Average CPI in countries with higher GDP per capita: {highGDPpc_AVGcpi:.2f}
+Average CPI in countries with lower GDP per capita: {lowGDPpc_AVGcpi:.2f}
 
-Note 1: Life expectancy in countries with the highest GDP per capita is, on average, 20 years higher than in countries with the lowest GDP.
+Dataframe comprising indicators associated with countries exhibiting higher GDP per capita.
+{high_sel_GDPcols}
 
-Note 2: CPI in countries with higher GDP in the range of 100 to 120, while countries with lower
-GDP has a wider range, from 100 to 1344 in Sudan's case.
+Dataframe comprising indicators associated with countries exhibiting lower GDP per capita.
+{lower_sel_GDPcols}
 
-Note 3: An interesting fact is that countries with lower levels of GDP per capita
-have an average unemployment rate lower than the average unemployment rate of countries with higher levels of
-GDP per capita.
 
-Note 4: We observe that countries with higher GDP per capita capture almost twice as much taxes as countries
-with lower GDP per capita.
+Observations regarding the correlation between GDP per capita and selected indicators.
+Note 1:
+Life expectancy in countries with the highest GDP per capita is,
+on average, 20 years higher than in countries with the lowest GDP.
 
-Note 5: Countries with higher per capita GDP have lower corporate tax levels,
-while countries with lower GDP per capita have lower levels of corporate taxes.
+Note 2:
+The Consumer Price Index (CPI) in nations boasting higher GDP levels typically spans from 100 to 120,
+whereas countries with lower GDP tend to display a wider range, reaching as high as 1344 in the case of Sudan.
 
-Note 6: Another thing we can observe is that most of the countries with the lowest GDP per capita are
-located in the African continent, while the countries with the highest GDP are mainly in Europe/West.
+Note 3:
+An interesting observation is that countries with lower GDP per capita tend to have an
+average unemployment rate lower than the average unemployment rate in countries with higher GDP per capita.
+
+Note 4:
+It's evident that countries with higher GDP per capita collect nearly
+double the amount of taxes compared to countries with lower GDP per capita.
+
+Note 5:
+Countries with higher per capita GDP tend to have lower corporate tax rates,
+whereas countries with lower GDP per capita typically impose lower corporate taxes.
+
+Note 6:
+Another noteworthy observation is that a majority of countries with the lowest GDP per capita
+are located in the African continent, while those with the highest GDP are primarily found in Europe and the West.
+
+Note 7:
+It becomes evident that the CPI in nations characterized by the lowest GDP per capita
+surpasses that of countries with the highest GDP per capita by a margin exceeding two-fold.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Exploration of the Interplay Between Out-of-Pocket Health Expenditure (OOPHE) and Health Indicators
+
+Mean values of diverse health indicators within nations characterized by high and low OOPHE.
+Average life expectancy in countries with higher OOPHE: {round(highOOPHE_AVGlifeexpectancy)}
+Average life expectancy in countries with lower OOPHE: {round(lowOOPHE_AVGlifeexpectancy)}
+Average infant mortality in countries with higher OOPHE: {round(highOOPHE_AVGinfantmortality)}
+Average infant mortality in countries with lower OOPHE: {round(lowOOPHE_AVGinfantmortality)}
+Average maternal mortality rate in countries with higher OOPHE: {round(highOOPHE_AVGmaternalmortality)}
+Average maternal mortality rate in countries with lower OOPHE: {round(lowOOPHE_AVGmaternalmortality)}
+Average fertility rate in countries with higher OOPHE: {round(highOOPHE_AVGfertilityrate)}
+Average fertility rate in countries with lower OOPHE: {round(lowOOPHE_AVGfertilityrate)}
+
+Dataframe comprising health indicators associated with countries exhibiting higher OOPHE.
+{high_oophe_selected_cols_df}
+
+Dataframe comprising health indicators associated with countries exhibiting lower OOPHE.
+{low_oophe_selected_cols_df}
+
+
+Observations regarding the correlation between OOPHE and selected health indicators.
 """
     with open("analysis.txt", "w") as f:
         f.write(content)
+
+    """Reseting options to default"""
+    pd.reset_option("display.max_columns")
+    pd.reset_option("display.width")
+
+
 general_info()
 
 
@@ -235,6 +380,7 @@ Also, get the CPI Change (%) of all countries that match those queries."""
 cpi_analysis = df[["Country", "CPI", "CPI Change (%)"]]
 sort_cpi_analysis = cpi_analysis.sort_values(by="CPI", ascending=True)
 sort_cpi_analysis = sort_cpi_analysis.dropna(subset=["Country", "CPI"])
+
 
 def show_inflation_rate():
     plt.figure(figsize=(10, 6))
