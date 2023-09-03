@@ -1,19 +1,39 @@
 Comprehensive Examination of Selected Indicators
-    
-Population Density
-Average world population density: 134.0
-The country with the highest population density is Palestinian National Authority with a density of 847.0
-The country with the lowest population density is Bangladesh with a density of 1.265
+
+Gasoline Price
+DataFrame containing the Country, Gasoline Price and Co2 Emissions sorted by top 5 costly Gasoline Prices
+    Country  Gasoline Price  Co2-Emissions
+0  Barbados            1.81        1276.00
+1    Israel            1.57       65166.00
+2  Portugal            1.54       48742.00
+3    Greece            1.54       62434.00
+4   Uruguay            1.50        6766.00
+
+Minimum wage
+DataFrame containing the Country, minimum wage, labor force participation and unemployment rate, sorted by high levels of minimum wage
+      Country  Minimum wage  Labor force participation (%)  Unemployment rate
+0      Uganda          0.01                          70.30               1.84
+1     Georgia          0.05                          68.30              14.40
+2    Tanzania          0.09                          83.40               1.98
+3  Kyrgyzstan          0.09                          59.80               6.33
+4      Malawi          0.12                          76.70               5.65
+DataFrame containing the Country, minimum wage, labor force participation and unemployment rate, sorted by low levels of minimum wage
+          Country  Minimum wage  Labor force participation (%)  Unemployment rate
+0      Luxembourg         13.05                          59.30               5.36
+1     New Zealand         11.49                          69.90               4.07
+2          France         11.16                          55.10               8.43
+3         Belgium         10.31                          53.60               5.59
+4  United Kingdom         10.13                          62.80               3.85
 
 Armed Forces
-The top 5 countries with the highest Armed Forces are: 
+The top 5 countries with the highest Armed Forces are:
          Country  Armed Forces size
 0          India         3031000.00
 1          China         2695000.00
 2    North Korea         1469000.00
 3         Russia         1454000.00
 4  United States         1359000.00
-The top 5 countries with the smallest Armed Forces are: 
+The top 5 countries with the smallest Armed Forces are:
       Country  Armed Forces size
 0  The Gambia            1000.00
 1  Cape Verde            1000.00
@@ -21,10 +41,19 @@ The top 5 countries with the smallest Armed Forces are:
 3  East Timor            2000.00
 4       Malta            2000.00
 
+Population Density
+Average world population density: 134.0
+The country with the highest population density is Palestinian National Authority with a density of 847.0
+The country with the lowest population density is Bangladesh with a density of 1.265
+
 Birth Rate
 Average birth rate: 20.15
 The country with the highest birth rate is Niger with a birth rate of 46.08
 The country with the lowest birth rate is Monaco with a birth rate of 5.9
+
+Infant mortality
+Infant mortality rates in nations with physician-to-population ratios surpassing the global mean: 6.85
+Infant mortality rates in nations with physician-to-population ratios below half the global mean: 38.22
 
 Primary Education enrollment rate
 Average primary education enrollment rate: 102.45%
@@ -47,33 +76,39 @@ An examination of the interrelation and influence of GDP per capita on various i
 
 Mean values of diverse indicators within nations characterized by high and low GDP per capita.
 Average life expectancy in countries with higher GDP per capita: 82
-Average life expectancy in countries with lower GDP per capita: 62
-Average unemployment rate in countries with higher GDP per capita: 4.96%
-Average unemployment rate in countries with lower GDP per capita: 5.06%
-Average tax revenue percentage in countries with higher GDP per capita: 20.86%
-Average tax revenue percentage in countries with lower GDP per capita: 10.88%
-Average total tax rate percentage in countries with higher GDP per capita: 31.91%
-Average total tax rate percentage in countries with lower GDP per capita: 47.31%
-Average CPI in countries with higher GDP per capita: 114.78
-Average CPI in countries with lower GDP per capita: 265.63
+Average life expectancy in countries with lower GDP per capita: 61
+Average unemployment rate in countries with higher GDP per capita: 5.02%
+Average unemployment rate in countries with lower GDP per capita: 5.60%
+Average tax revenue percentage in countries with higher GDP per capita: 19.91%
+Average tax revenue percentage in countries with lower GDP per capita: 11.04%
+Average total tax rate percentage in countries with higher GDP per capita: 34.12%
+Average total tax rate percentage in countries with lower GDP per capita: 47.66%
+Average CPI in countries with higher GDP per capita: 114.55
+Average CPI in countries with lower GDP per capita: 238.62
+
 
 Dataframe comprising indicators associated with countries exhibiting higher GDP per capita.
                 Country  GDP per capita  Unemployment rate  Life expectancy    CPI  Total tax rate  Tax revenue (%)
-0               Austria        50277.28               4.67            81.60 118.06           51.40            25.40
-1                Sweden        51610.07               6.48            82.50 110.51           49.10            27.90
-2           Netherlands        52447.83               3.20            81.80 115.91           41.20            23.00
-3             Australia        54049.83               5.27            82.70 119.80           47.40            23.00
-4               Denmark        59822.09               4.91            81.00 110.35           23.80            32.40
-5                 Qatar        64781.73               0.09            80.10 115.38           11.30            14.70
-6             Singapore        65233.28               4.11            83.10 114.41           21.00            13.10
+0                Monaco       184396.99                NaN              NaN    NaN             NaN              NaN
+1         Liechtenstein       172357.47                NaN            83.00    NaN           21.60              NaN
+2            Luxembourg       110172.37               5.36            82.10 115.09           20.40            26.50
+3           Switzerland        81993.73               4.58            83.60  99.55           28.80            10.10
+4   Republic of Ireland        77629.99               4.93            82.30 106.58           26.10            18.30
+5                Norway        75419.63               3.35            82.80 120.27           36.20            23.90
+6               Iceland        66944.83               2.84            82.70 129.00           31.90            23.30
 7         United States        65280.68              14.70            78.50 117.24           36.60             9.60
-8               Iceland        66944.83               2.84            82.70 129.00           31.90            23.30
-9                Norway        75419.63               3.35            82.80 120.27           36.20            23.90
-10  Republic of Ireland        77629.99               4.93            82.30 106.58           26.10            18.30
-11          Switzerland        81993.73               4.58            83.60  99.55           28.80            10.10
-12           Luxembourg       110172.37               5.36            82.10 115.09           20.40            26.50
-13        Liechtenstein       172357.47                NaN            83.00    NaN           21.60              NaN
-14               Monaco       184396.99                NaN              NaN    NaN             NaN              NaN
+8             Singapore        65233.28               4.11            83.10 114.41           21.00            13.10
+9                 Qatar        64781.73               0.09            80.10 115.38           11.30            14.70
+10              Denmark        59822.09               4.91            81.00 110.35           23.80            32.40
+11            Australia        54049.83               5.27            82.70 119.80           47.40            23.00
+12          Netherlands        52447.83               3.20            81.80 115.91           41.20            23.00
+13               Sweden        51610.07               6.48            82.50 110.51           49.10            27.90
+14              Austria        50277.28               4.67            81.60 118.06           51.40            25.40
+15              Finland        48685.85               6.59            81.70 112.33           36.60            20.80
+16           San Marino        48373.63                NaN            85.40 110.63           36.20            18.10
+17               Canada        46940.60               5.56            81.90 116.76           24.50            12.80
+18              Germany        46258.88               3.04            80.90 112.85           48.80            11.50
+19              Belgium        46116.70               5.59            81.60 117.11           55.40            24.00
 
 Dataframe comprising indicators associated with countries exhibiting lower GDP per capita.
                              Country  GDP per capita  Unemployment rate  Life expectancy     CPI  Total tax rate  Tax revenue (%)
@@ -92,85 +127,42 @@ Dataframe comprising indicators associated with countries exhibiting lower GDP p
 12                             Niger          554.60               0.47            62.00  109.32           47.20            11.80
 13                           Liberia          621.89               2.81            63.70  223.13           46.20            12.90
 14                              Togo          675.54               2.04            60.80  113.30           48.20            16.90
+15                     Guinea-Bissau          697.78               2.47            58.00  111.65           45.50            10.30
+16                              Chad          709.54               1.89            54.00  117.70           63.50              NaN
+17                        The Gambia          751.29               9.06            61.70  172.73           48.40             9.40
+18                             Haiti          754.59              13.78            63.70  179.29           42.70              NaN
+19                      Burkina Faso          774.84               6.26            61.20  106.58           41.30            15.00
 
 
 Observations regarding the correlation between GDP per capita and selected indicators.
 Note 1:
-Life expectancy in countries with the highest GDP per capita is, 
+Life expectancy in countries with the highest GDP per capita is,
 on average, 20 years higher than in countries with the lowest GDP.
 
 Note 2:
-The Consumer Price Index (CPI) in nations boasting higher GDP levels typically spans from 100 to 120, 
+The Consumer Price Index (CPI) in nations boasting higher GDP levels typically spans from 100 to 120,
 whereas countries with lower GDP tend to display a wider range, reaching as high as 1344 in the case of Sudan.
 
 Note 3:
-An interesting observation is that countries with lower GDP per capita tend to have an 
-average unemployment rate lower than the average unemployment rate in countries with higher GDP per capita.
+Nations characterized by a lower GDP per capita often exhibit a higher 
+average unemployment rate compared to those nations with a higher GDP per capita. 
+Nevertheless, it is imperative to acknowledge that numerous countries with low GDP per capita 
+maintain an unemployment rate lower than their counterparts with a higher unemployment rate. 
+Consequently, it is evident that while GDP per capita may exert an influence on the unemployment rate, 
+its impact is not necessarily substantial (though it should be noted that it does exert some influence).
 
 Note 4:
-It's evident that countries with higher GDP per capita collect nearly 
+It's evident that countries with higher GDP per capita collect nearly
 double the amount of taxes compared to countries with lower GDP per capita.
 
 Note 5:
-Countries with higher per capita GDP tend to have lower corporate tax rates, 
+Countries with higher per capita GDP tend to have lower corporate tax rates,
 whereas countries with lower GDP per capita typically impose lower corporate taxes.
 
 Note 6:
-Another noteworthy observation is that a majority of countries with the lowest GDP per capita 
+Another noteworthy observation is that a majority of countries with the lowest GDP per capita
 are located in the African continent, while those with the highest GDP are primarily found in Europe and the West.
 
 Note 7:
-It becomes evident that the CPI in nations characterized by the lowest GDP per capita 
+It becomes evident that the CPI in nations characterized by the lowest GDP per capita
 surpasses that of countries with the highest GDP per capita by a margin exceeding two-fold.
-
------------------------------------------------------------------------------------------------------------------------------------------------------
-Exploration of the Interplay Between Out-of-Pocket Health Expenditure (OOPHE) and Health Indicators
-
-Mean values of diverse health indicators within nations characterized by high and low OOPHE.
-Average life expectancy in countries with higher OOPHE: 68
-Average life expectancy in countries with lower OOPHE: 75
-Average infant mortality in countries with higher OOPHE: 34
-Average infant mortality in countries with lower OOPHE: 14
-Average maternal mortality rate in countries with higher OOPHE: 274
-Average maternal mortality rate in countries with lower OOPHE: 83
-Average fertility rate in countries with higher OOPHE: 3
-Average fertility rate in countries with lower OOPHE: 2
-
-Dataframe comprising health indicators associated with countries exhibiting higher OOPHE.
-                  Country  Out of pocket health expenditure  Life expectancy  Infant mortality  Fertility Rate  Maternal mortality ratio
-0               Mauritius                             50.70            74.40             13.60            1.41                     61.00
-1                    Togo                             51.00            60.80             47.40            4.32                    396.00
-2                   Niger                             52.30            62.00             48.00            6.91                    509.00
-3                 Eritrea                             52.40            65.90             31.30            4.06                    480.00
-4                 Morocco                             53.10            76.50             19.20            2.42                     70.00
-5             Philippines                             53.50            71.10             22.50            2.58                    121.00
-6                   Syria                             53.70            71.80             14.00            2.81                     31.00
-7                  Guinea                             54.50            61.20             64.90            4.70                    576.00
-8               Guatemala                             55.80            74.10             22.10            2.87                     95.00
-9                    Chad                             56.40            54.00             71.40            5.75                   1140.00
-10  Saint Kitts and Nevis                             56.60            71.30              9.80            2.11                       NaN
-11                Albania                             56.90            78.50              7.80            1.62                     15.00
-12                Grenada                             57.00            72.40             13.70            2.06                     25.00
-13                Georgia                             57.30            73.60              8.70            2.06                     25.00
-14               Cambodia                             59.40            69.60             24.00            2.50                    160.00
-
-Dataframe comprising health indicators associated with countries exhibiting lower OOPHE.
-                           Country  Out of pocket health expenditure  Life expectancy  Infant mortality  Fertility Rate  Maternal mortality ratio
-0                         Kiribati                              0.20            68.10             41.20            3.57                     92.00
-1                           Tuvalu                              0.70              NaN             20.60             NaN                       NaN
-2   Federated States of Micronesia                              2.50            67.80             25.60            3.05                     88.00
-3                       Seychelles                              2.50            72.80             12.40            2.41                     53.00
-4                  Solomon Islands                              3.30            72.80             17.10            4.40                    104.00
-5                         Botswana                              5.30            69.30             30.00            2.87                    144.00
-6                 Papua New Guinea                              5.80            64.30             38.00            3.56                    145.00
-7                           Brunei                              6.00            75.70              9.80            1.85                     31.00
-8                           Monaco                              6.10              NaN              2.60             NaN                       NaN
-9                            Qatar                              6.20            80.10              5.80            1.87                      9.00
-10                            Oman                              6.40            77.60              9.80            2.89                     19.00
-11                      Mozambique                              6.80            60.20             54.00            4.85                    289.00
-12                          France                              6.80            82.50              3.40            1.88                      8.00
-13                    South Africa                              7.70            63.90             28.50            2.41                    119.00
-14                         Namibia                              8.30            63.40             29.00            3.40                    195.00
-
-
-Observations regarding the correlation between OOPHE and selected health indicators.

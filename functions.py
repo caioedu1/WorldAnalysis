@@ -60,6 +60,15 @@ def data_clean(df):
     )
 
     """Passing columns to numeric and cleaning values"""
+    df["Minimum wage"] = pd.to_numeric(
+        df["Minimum wage"].str.replace("$", "")
+    )
+    df["Gasoline Price"] = pd.to_numeric(
+        df["Gasoline Price"].str.replace("$", "")
+    )
+    df["Physicians per thousand"] = pd.to_numeric(
+        df["Physicians per thousand"]
+    )
     df["Out of pocket health expenditure"] = pd.to_numeric(
         df["Out of pocket health expenditure"].str.replace("%", "")
     )
