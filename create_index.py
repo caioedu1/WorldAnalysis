@@ -1,13 +1,13 @@
 import pandas as pd
 from functions import data_clean
 
-# Create an index that determine if a country is nice to live or not.
-# Process files
+"""Create an index that determine if a country is nice to live or not."""
+"""Process files"""
 data = "world-data-2023.csv"
 read_data = pd.read_csv(data)
 df = pd.DataFrame(read_data)
 
-# Data Clean
+"""Data Clean"""
 df = data_clean(df)
 
 """Create average CO2 Emissions per person"""
@@ -16,7 +16,7 @@ df["CO2-Emissions/person"] = df["Population"] / df["Co2-Emissions"]
 df["GDP per capita"] = df["GDP"] / df["Population"]
 
 
-# Create index
+"""Create index"""
 """This index was created specifically to calculate how good it is to live in a country.
 All results are based on dataframe information:
 https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023
@@ -100,7 +100,7 @@ def QOLindex(country):
                         points -= 5
                     elif country_row.loc[:, "GDP per capita"].item() < 1000:
                         points -= 5
-                    
+
                 evaluate_economics()
 
                 def evaluate_education():
@@ -117,16 +117,13 @@ def QOLindex(country):
                         >= 75
                     ):
                         points += 5
-                    elif (
+                    elif country_row.loc[
+                        :, "Gross primary education enrollment (%)"
+                    ].item() >= 95 and (
                         country_row.loc[
-                            :, "Gross primary education enrollment (%)"
+                            :, "Gross tertiary education enrollment (%)"
                         ].item()
-                        >= 95 and (
-                            country_row.loc[
-                                :, "Gross tertiary education enrollment (%)"
-                            ].item()
-                            > 60
-                        )
+                        > 60
                     ):
                         points += 3
 
@@ -232,4 +229,3 @@ def QOLindex(country):
 
     else:
         raise TypeError("Country must be a string or a list of strings")
-    

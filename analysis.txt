@@ -1,7 +1,7 @@
 Comprehensive Examination of Selected Indicators
 
 Gasoline Price
-DataFrame containing the Country, Gasoline Price and Co2 Emissions sorted by top 5 costly Gasoline Prices
+Data frame containing the country, gasoline price, and CO2 emissions sorted by the five costly gasoline prices
     Country  Gasoline Price  Co2-Emissions
 0  Barbados            1.81        1276.00
 1    Israel            1.57       65166.00
@@ -10,30 +10,30 @@ DataFrame containing the Country, Gasoline Price and Co2 Emissions sorted by top
 4   Uruguay            1.50        6766.00
 
 Minimum wage
-DataFrame containing the Country, minimum wage, labor force participation and unemployment rate, sorted by high levels of minimum wage
-      Country  Minimum wage  Labor force participation (%)  Unemployment rate
-0      Uganda          0.01                          70.30               1.84
-1     Georgia          0.05                          68.30              14.40
-2    Tanzania          0.09                          83.40               1.98
-3  Kyrgyzstan          0.09                          59.80               6.33
-4      Malawi          0.12                          76.70               5.65
-DataFrame containing the Country, minimum wage, labor force participation and unemployment rate, sorted by low levels of minimum wage
+Data frame containing the country, minimum wage, labor force participation, and unemployment rate, sorted by high levels of minimum wage
           Country  Minimum wage  Labor force participation (%)  Unemployment rate
 0      Luxembourg         13.05                          59.30               5.36
 1     New Zealand         11.49                          69.90               4.07
 2          France         11.16                          55.10               8.43
 3         Belgium         10.31                          53.60               5.59
 4  United Kingdom         10.13                          62.80               3.85
+Data frame containing the country, minimum wage, labor force participation, and unemployment rate, sorted by low levels of minimum wage
+      Country  Minimum wage  Labor force participation (%)  Unemployment rate
+0      Uganda          0.01                          70.30               1.84
+1     Georgia          0.05                          68.30              14.40
+2    Tanzania          0.09                          83.40               1.98
+3  Kyrgyzstan          0.09                          59.80               6.33
+4      Malawi          0.12                          76.70               5.65
 
 Armed Forces
-The top 5 countries with the highest Armed Forces are:
+The top 5 countries with the highest armed forces are:
          Country  Armed Forces size
 0          India         3031000.00
 1          China         2695000.00
 2    North Korea         1469000.00
 3         Russia         1454000.00
 4  United States         1359000.00
-The top 5 countries with the smallest Armed Forces are:
+The top 5 countries with the smallest armed forces are:
       Country  Armed Forces size
 0  The Gambia            1000.00
 1  Cape Verde            1000.00
@@ -43,8 +43,8 @@ The top 5 countries with the smallest Armed Forces are:
 
 Population Density
 Average world population density: 134.0
-The country with the highest population density is Palestinian National Authority with a density of 847.0
-The country with the lowest population density is Bangladesh with a density of 1.265
+The country with the highest population density is Bangladesh with a density of 1.265
+The country with the lowest population density is Palestinian National Authority with a density of 847.0
 
 Birth Rate
 Average birth rate: 20.15
@@ -52,18 +52,18 @@ The country with the highest birth rate is Niger with a birth rate of 46.08
 The country with the lowest birth rate is Monaco with a birth rate of 5.9
 
 Infant mortality
-Infant mortality rates in nations with physician-to-population ratios surpassing the global mean: 6.85
-Infant mortality rates in nations with physician-to-population ratios below half the global mean: 38.22
+Average infant mortality rates in nations with physician-to-population ratios surpassing the global mean: 6.85
+Average infant mortality rates in nations with physician-to-population ratios below half the global mean: 38.22
 
-Primary Education enrollment rate
-Average primary education enrollment rate: 102.45%
-Country with the highest primary education enrollment rate: Madagascar with an rate of 142.5%
+Primary education enrollment rate
+Average global primary education enrollment rate: 102.45%
+Country with the highest primary education enrollment rate: Madagascar with a rate of 142.5%
 Country with the lowest primary education enrollment rate: Somalia with a rate of 23.4%
 
-Tertiary Education enrollment rate
-Average primary education enrollment rate: 38.10%
-Country with the highest primary education enrollment rate: Greece with an rate of 136.6%
-Country with the lowest primary education enrollment rate: Malawi with a rate of 0.8%
+Tertiary education enrollment rate
+Average global tertiary education enrollment rate: 38.10%
+Country with the highest tertiary education enrollment rate: Greece with a rate of 136.6%
+Country with the lowest tertiary education enrollment rate: Malawi with a rate of 0.8%
 
 Official languages
 The top 3 widely spoken languages in the world are:
@@ -72,7 +72,7 @@ French     25
 Spanish    19
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
-An examination of the interrelation and influence of GDP per capita on various indicators
+An examination of the interrelationship and influence of GDP per capita on various indicators
 
 Mean values of diverse indicators within nations characterized by high and low GDP per capita.
 Average life expectancy in countries with higher GDP per capita: 82
@@ -87,7 +87,7 @@ Average CPI in countries with higher GDP per capita: 114.55
 Average CPI in countries with lower GDP per capita: 238.62
 
 
-Dataframe comprising indicators associated with countries exhibiting higher GDP per capita.
+Data frame comprising indicators associated with countries exhibiting higher GDP per capita.
                 Country  GDP per capita  Unemployment rate  Life expectancy    CPI  Total tax rate  Tax revenue (%)
 0                Monaco       184396.99                NaN              NaN    NaN             NaN              NaN
 1         Liechtenstein       172357.47                NaN            83.00    NaN           21.60              NaN
@@ -110,7 +110,7 @@ Dataframe comprising indicators associated with countries exhibiting higher GDP 
 18              Germany        46258.88               3.04            80.90 112.85           48.80            11.50
 19              Belgium        46116.70               5.59            81.60 117.11           55.40            24.00
 
-Dataframe comprising indicators associated with countries exhibiting lower GDP per capita.
+Data frame comprising indicators associated with countries exhibiting lower GDP per capita.
                              Country  GDP per capita  Unemployment rate  Life expectancy     CPI  Total tax rate  Tax revenue (%)
 0                            Burundi          261.25               1.43            61.20  182.11           41.20            13.60
 1                            Somalia          305.69              11.35            57.10     NaN             NaN             0.00
@@ -144,25 +144,24 @@ The Consumer Price Index (CPI) in nations boasting higher GDP levels typically s
 whereas countries with lower GDP tend to display a wider range, reaching as high as 1344 in the case of Sudan.
 
 Note 3:
-Nations characterized by a lower GDP per capita often exhibit a higher 
-average unemployment rate compared to those nations with a higher GDP per capita. 
-Nevertheless, it is imperative to acknowledge that numerous countries with low GDP per capita 
-maintain an unemployment rate lower than their counterparts with a higher unemployment rate. 
-Consequently, it is evident that while GDP per capita may exert an influence on the unemployment rate, 
-its impact is not necessarily substantial (though it should be noted that it does exert some influence).
+Nations characterized by a lower GDP per capita often exhibit a higher
+average unemployment rate compared to those nations with a higher GDP per capita.
+Nevertheless, it is imperative to acknowledge that numerous countries with low GDP per capita maintain an 
+unemployment rate lower than their counterparts with a higher unemployment rate. Consequently, it is evident 
+that while GDP per capita may exert an influence on the unemployment rate, its impact is not necessarily substantial.
 
 Note 4:
-It's evident that countries with higher GDP per capita collect nearly
+It's evident that countries with a higher GDP per capita collect nearly
 double the amount of taxes compared to countries with lower GDP per capita.
 
 Note 5:
-Countries with higher per capita GDP tend to have lower corporate tax rates,
-whereas countries with lower GDP per capita typically impose lower corporate taxes.
+Countries with a higher per capita GDP tend to have lower corporate tax rates,
+whereas countries with a lower GDP per capita typically impose lower corporate taxes.
 
 Note 6:
-Another noteworthy observation is that a majority of countries with the lowest GDP per capita
-are located in the African continent, while those with the highest GDP are primarily found in Europe and the West.
+Another noteworthy observation is that the majority of countries with the lowest GDP per capita
+are located on the African continent, while those with the highest GDP are primarily found in Europe and the West.
 
 Note 7:
 It becomes evident that the CPI in nations characterized by the lowest GDP per capita
-surpasses that of countries with the highest GDP per capita by a margin exceeding two-fold.
+surpasses that of countries with the highest GDP per capita by a margin exceeding twofold.

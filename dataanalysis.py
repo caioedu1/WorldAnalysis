@@ -1,32 +1,31 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import locale
-from create_index import QOLindex
 from functions import data_clean
 import plotly.express as px
 
-"""Database links:
+"""
+Database links:
 https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023
-obs: data may not be 100% accurate, but the main purpose of this project is just show my abilities in data analysis,
-so any information extracted is exclusively based in this database."""
+"""
 
 """world-data-2023.csv analysis"""
-# configure locale
+"""Configure locale"""
 locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
-# Process files
+"""Process files"""
 data = "world-data-2023.csv"
 read_data = pd.read_csv(data)
 df = pd.DataFrame(read_data)
 
-# Data Clean
+""" Data clean """
 df = data_clean(df)
 
 # transform csv file into xlsx file for visualization purposes
 df.to_excel("world-data-2023.xlsx", index=False)
 
 
-"""General informations"""
+"""Extract general informations and pass them to analysis.txt"""
 
 
 def general_info():
@@ -43,7 +42,7 @@ def general_info():
     lowest minimum wage and another for the 5 countries with the highest minimum wage.
     Include labor force participation (%) and unemployment rate for each dataframe."""
     high_minimum_wage = (
-        df.sort_values(by="Minimum wage", ascending=True).dropna().head(5)
+        df.sort_values(by="Minimum wage", ascending=False).dropna().head(5)
     )
     high_minimum_wage = high_minimum_wage[
         [
@@ -54,7 +53,7 @@ def general_info():
         ]
     ].reset_index(drop=True)
     low_minimum_wage = (
-        df.sort_values(by="Minimum wage", ascending=False).dropna().head(5)
+        df.sort_values(by="Minimum wage", ascending=True).dropna().head(5)
     )
     low_minimum_wage = low_minimum_wage[
         [
@@ -65,7 +64,6 @@ def general_info():
         ]
     ].reset_index(drop=True)
 
-    print(df.loc[df["Country"] == "Brazil", "Minimum wage"])
 
     """Task 3: Identify the top 5 countries with the biggest armed forces, and
     the top 5 countries with the smallest armed forces"""
@@ -185,25 +183,25 @@ def general_info():
     content = f"""Comprehensive Examination of Selected Indicators
 
 Gasoline Price
-DataFrame containing the Country, Gasoline Price and Co2 Emissions sorted by top 5 costly Gasoline Prices
+Data frame containing the country, gasoline price, and CO2 emissions sorted by the five costly gasoline prices
 {gasoline_price_sort}
 
 Minimum wage
-DataFrame containing the Country, minimum wage, labor force participation and unemployment rate, sorted by high levels of minimum wage
+Data frame containing the country, minimum wage, labor force participation, and unemployment rate, sorted by high levels of minimum wage
 {high_minimum_wage}
-DataFrame containing the Country, minimum wage, labor force participation and unemployment rate, sorted by low levels of minimum wage
+Data frame containing the country, minimum wage, labor force participation, and unemployment rate, sorted by low levels of minimum wage
 {low_minimum_wage}
 
 Armed Forces
-The top 5 countries with the highest Armed Forces are:
+The top 5 countries with the highest armed forces are:
 {countries_highest_AF}
-The top 5 countries with the smallest Armed Forces are:
+The top 5 countries with the smallest armed forces are:
 {countries_smallest_AF}
 
 Population Density
 Average world population density: {avg_dens:.1f}
-The country with the highest population density is {country_high_dens} with a density of {max_dens}
-The country with the lowest population density is {country_low_dens} with a density of {min_dens}
+The country with the highest population density is {country_low_dens} with a density of {min_dens}
+The country with the lowest population density is {country_high_dens} with a density of {max_dens}
 
 Birth Rate
 Average birth rate: {avg_birth_rate:.2f}
@@ -211,25 +209,25 @@ The country with the highest birth rate is {country_high_br} with a birth rate o
 The country with the lowest birth rate is {country_low_br} with a birth rate of {min_br}
 
 Infant mortality
-Infant mortality rates in nations with physician-to-population ratios surpassing the global mean: {avg_infant_above_phys:.2f}
-Infant mortality rates in nations with physician-to-population ratios below half the global mean: {avg_infant_half_phys:.2f}
+Average infant mortality rates in nations with physician-to-population ratios surpassing the global mean: {avg_infant_above_phys:.2f}
+Average infant mortality rates in nations with physician-to-population ratios below half the global mean: {avg_infant_half_phys:.2f}
 
-Primary Education enrollment rate
-Average primary education enrollment rate: {avg_primary_education:.2f}%
-Country with the highest primary education enrollment rate: {high_countries_PE} with an rate of {highest_primary_education}%
+Primary education enrollment rate
+Average global primary education enrollment rate: {avg_primary_education:.2f}%
+Country with the highest primary education enrollment rate: {high_countries_PE} with a rate of {highest_primary_education}%
 Country with the lowest primary education enrollment rate: {low_countries_PE} with a rate of {lowest_primary_education}%
 
-Tertiary Education enrollment rate
-Average primary education enrollment rate: {avg_tertiary_education:.2f}%
-Country with the highest primary education enrollment rate: {high_countries_TE} with an rate of {highest_tertiary_education}%
-Country with the lowest primary education enrollment rate: {low_countries_TE} with a rate of {lowest_tertiary_education}%
+Tertiary education enrollment rate
+Average global tertiary education enrollment rate: {avg_tertiary_education:.2f}%
+Country with the highest tertiary education enrollment rate: {high_countries_TE} with a rate of {highest_tertiary_education}%
+Country with the lowest tertiary education enrollment rate: {low_countries_TE} with a rate of {lowest_tertiary_education}%
 
 Official languages
 The top 3 widely spoken languages in the world are:
 {top_languages}
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
-An examination of the interrelation and influence of GDP per capita on various indicators
+An examination of the interrelationship and influence of GDP per capita on various indicators
 
 Mean values of diverse indicators within nations characterized by high and low GDP per capita.
 Average life expectancy in countries with higher GDP per capita: {round(highGDPpc_AVGle)}
@@ -244,10 +242,10 @@ Average CPI in countries with higher GDP per capita: {highGDPpc_AVGcpi:.2f}
 Average CPI in countries with lower GDP per capita: {lowGDPpc_AVGcpi:.2f}
 
 
-Dataframe comprising indicators associated with countries exhibiting higher GDP per capita.
+Data frame comprising indicators associated with countries exhibiting higher GDP per capita.
 {high_sel_GDPcols}
 
-Dataframe comprising indicators associated with countries exhibiting lower GDP per capita.
+Data frame comprising indicators associated with countries exhibiting lower GDP per capita.
 {lower_sel_GDPcols}
 
 
@@ -263,26 +261,25 @@ whereas countries with lower GDP tend to display a wider range, reaching as high
 Note 3:
 Nations characterized by a lower GDP per capita often exhibit a higher
 average unemployment rate compared to those nations with a higher GDP per capita.
-Nevertheless, it is imperative to acknowledge that numerous countries with low GDP per capita
-maintain an unemployment rate lower than their counterparts with a higher unemployment rate.
-Consequently, it is evident that while GDP per capita may exert an influence on the unemployment rate,
-its impact is not necessarily substantial (though it should be noted that it does exert some influence).
+Nevertheless, it is imperative to acknowledge that numerous countries with low GDP per capita maintain an 
+unemployment rate lower than their counterparts with a higher unemployment rate. Consequently, it is evident 
+that while GDP per capita may exert an influence on the unemployment rate, its impact is not necessarily substantial.
 
 Note 4:
-It's evident that countries with higher GDP per capita collect nearly
+It's evident that countries with a higher GDP per capita collect nearly
 double the amount of taxes compared to countries with lower GDP per capita.
 
 Note 5:
-Countries with higher per capita GDP tend to have lower corporate tax rates,
-whereas countries with lower GDP per capita typically impose lower corporate taxes.
+Countries with a higher per capita GDP tend to have lower corporate tax rates,
+whereas countries with a lower GDP per capita typically impose lower corporate taxes.
 
 Note 6:
-Another noteworthy observation is that a majority of countries with the lowest GDP per capita
-are located in the African continent, while those with the highest GDP are primarily found in Europe and the West.
+Another noteworthy observation is that the majority of countries with the lowest GDP per capita
+are located on the African continent, while those with the highest GDP are primarily found in Europe and the West.
 
 Note 7:
 It becomes evident that the CPI in nations characterized by the lowest GDP per capita
-surpasses that of countries with the highest GDP per capita by a margin exceeding two-fold.
+surpasses that of countries with the highest GDP per capita by a margin exceeding twofold.
 """
     with open("analysis.txt", "w") as f:
         f.write(content)
@@ -506,12 +503,15 @@ def forest_co2_plot_png():
         format="png",
         dpi=300,
     )
+    plt.close()
 
 
-"""Plot to an interactive html file. CS50.ai, or the famous DuckDebugger, helped me with the interactivity"""
+forest_co2_plot_png()
+
+"""Plot to an interactive html file."""
 
 
-def forest_co2_plot_png():
+def forest_co2_plot_html():
     plt.figure(figsize=(10, 6))
     fig = px.scatter(
         df, x="Forested Area (%)", y="Co2-Emissions", hover_data=["Country"]
@@ -527,5 +527,4 @@ def forest_co2_plot_png():
     plt.close()
 
 
-forest_co2_plot_png()
-plt.show()
+forest_co2_plot_html()

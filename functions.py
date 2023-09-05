@@ -6,7 +6,7 @@ import pandas as pd
 
 
 def send_email(emails):
-    # Check if emails is a list of strings
+    """Check if emails is a list of strings"""
     if (
         isinstance(emails, list)
         and all(isinstance(i, str) for i in emails)
@@ -19,21 +19,14 @@ def send_email(emails):
             mail = outlook.CreateItem(0)
             mail.To = ";".join(emails)
             mail.Subject = "Requested Files"
-            mail.HTMLBody = (
-                '<h2> Files based on the analysis of "world-data-2023.csv" </h2>'
-            )
-
-            folder = r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs"
-
-            attachment_list = []
-            for root, dirs, files in os.walk(folder):
-                for arquivo in files:
-                    full_path = os.path.join(root, arquivo)
-                    attachment = mail.Attachments.Add(full_path)
-                    attachment_list.append(attachment)
+            mail.HTMLBody = """<h2> Files based on the analysis of "world-data-2023.csv" </h2>
+<p> You may access the files on Google Drive through the following link. </p>
+<h3><a href="https://drive.google.com/drive/folders/1fZzZib_PwewGOLj6fLGfAjQx7cSe_mHv?usp=drive_link">Files</a></h3>"""
 
             mail.Send()
             print("Email sent.")
+
+            outlook.Quit()
         except Exception as e:
             print(f"An error has occurred: {str(e)}")
     else:
@@ -60,15 +53,9 @@ def data_clean(df):
     )
 
     """Passing columns to numeric and cleaning values"""
-    df["Minimum wage"] = pd.to_numeric(
-        df["Minimum wage"].str.replace("$", "")
-    )
-    df["Gasoline Price"] = pd.to_numeric(
-        df["Gasoline Price"].str.replace("$", "")
-    )
-    df["Physicians per thousand"] = pd.to_numeric(
-        df["Physicians per thousand"]
-    )
+    df["Minimum wage"] = pd.to_numeric(df["Minimum wage"].str.replace("$", ""))
+    df["Gasoline Price"] = pd.to_numeric(df["Gasoline Price"].str.replace("$", ""))
+    df["Physicians per thousand"] = pd.to_numeric(df["Physicians per thousand"])
     df["Out of pocket health expenditure"] = pd.to_numeric(
         df["Out of pocket health expenditure"].str.replace("%", "")
     )
