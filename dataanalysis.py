@@ -10,15 +10,15 @@ https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023
 """
 
 """world-data-2023.csv analysis"""
-"""Configure locale"""
+# Configure locale
 locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
-"""Process files"""
+# Process files
 data = "world-data-2023.csv"
 read_data = pd.read_csv(data)
 df = pd.DataFrame(read_data)
 
-""" Data clean """
+# Data clean
 df = data_clean(df)
 
 # transform csv file into xlsx file for visualization purposes
@@ -29,8 +29,8 @@ df.to_excel("world-data-2023.xlsx", index=False)
 
 
 def general_info():
-    """Task 1: Create a simple dataframe containing the top 5 countries
-    with the highest Gasoline Price and its respective Co2 Emissions"""
+    """Task 1: Create a simple data frame containing the top 5 countries
+    with the highest gasoline price and its respective Co2 Emissions."""
     gasoline_price_sort = (
         df.sort_values(by="Gasoline Price", ascending=False).dropna().head(5)
     )
@@ -38,9 +38,9 @@ def general_info():
         ["Country", "Gasoline Price", "Co2-Emissions"]
     ].reset_index(drop=True)
 
-    """Task 2: Generate two dataframes. One for the 5 countries with the
+    """Task 2: Generate two data frames. One for the 5 countries with the
     lowest minimum wage and another for the 5 countries with the highest minimum wage.
-    Include labor force participation (%) and unemployment rate for each dataframe."""
+    Include labor force participation (%) and the unemployment rate for each data frame."""
     high_minimum_wage = (
         df.sort_values(by="Minimum wage", ascending=False).dropna().head(5)
     )
@@ -64,9 +64,8 @@ def general_info():
         ]
     ].reset_index(drop=True)
 
-
     """Task 3: Identify the top 5 countries with the biggest armed forces, and
-    the top 5 countries with the smallest armed forces"""
+    the top 5 countries with the smallest armed forces."""
     smallestAF = df.sort_values(by="Armed Forces size", ascending=True).dropna().head(5)
     countries_smallest_AF = smallestAF[["Country", "Armed Forces size"]].reset_index(
         drop=True
@@ -80,16 +79,16 @@ def general_info():
         drop=True
     )
 
-    """Task 4: Identify the country with the highest density, the country with the lowest density and
-    the average world population density"""
+    """Task 4: Identify the country with the highest density, the country with the lowest density, and
+    the average world population density."""
     max_dens = df["Density (P/Km2)"].max()
     min_dens = df["Density (P/Km2)"].min()
     country_high_dens = df.loc[df["Density (P/Km2)"].idxmax(), "Country"]
     country_low_dens = df.loc[df["Density (P/Km2)"].idxmin(), "Country"]
     avg_dens = df["Density (P/Km2)"].mean()
 
-    """Task 5: Find the country with the highest birth rate, the country with the lowest birth rate and
-    the average world birth rate"""
+    """Task 5: Find the country with the highest birth rate, the country with the lowest birth rate, and
+    the average world birth rate."""
     max_br = df["Birth Rate"].max()
     min_br = df["Birth Rate"].min()
     country_high_br = df.loc[df["Birth Rate"].idxmax(), "Country"]
@@ -98,7 +97,7 @@ def general_info():
 
     """Task 6: Calculate the average infant mortality rate for countries that
     have a number of physicians per thousand above the global average and the average
-    infant mortality for countries that have a number of physicians per thousand half of the global mean."""
+    infant mortality for countries that have a number of physicians per thousand that is half of the global mean."""
     avg_phythousand = df["Physicians per thousand"].mean()
     avg_infant_above_phys = df.loc[
         df["Physicians per thousand"] > avg_phythousand, "Infant mortality"
@@ -109,7 +108,7 @@ def general_info():
 
     """Task 7: Find the country with the highest primary school enrollment rate,
     the country with the lowest primary school enrollment rate,
-    and the avg primary school enrollment rate."""
+    and the average primary school enrollment rate."""
     avg_primary_education = df["Gross primary education enrollment (%)"].mean()
     highest_primary_education = df["Gross primary education enrollment (%)"].max()
     lowest_primary_education = df["Gross primary education enrollment (%)"].min()
@@ -122,7 +121,7 @@ def general_info():
 
     """Task 8: Find the country with the highest tertiary school enrollment rate,
     the country with the lowest tertiary school enrollment rate,
-    and the avg tertiary school enrollment rate."""
+    and the average tertiary school enrollment rate."""
     avg_tertiary_education = df["Gross tertiary education enrollment (%)"].mean()
     highest_tertiary_education = df["Gross tertiary education enrollment (%)"].max()
     lowest_tertiary_education = df["Gross tertiary education enrollment (%)"].min()
@@ -133,13 +132,13 @@ def general_info():
         df["Gross tertiary education enrollment (%)"].idxmin(), "Country"
     ]
 
-    """Task 9: Identify what is the top 3 most spoken language in the world."""
+    """Task 9: Determine which three languages are the primary languages in the most countries."""
     spoken = df.groupby("Official language").size()
     top_languages = spoken.sort_values(ascending=False).head(3).to_string()
     top_languages = "\n".join(top_languages.split("\n")[1:])
 
-    """Task 10: Make a full analysis of how GDP per capita is related with unemployement rate,
-    life expectancy, CPI and others indicators."""
+    """Task 10: Conduct an analysis of how GDP per capita is
+    correlated with the unemployment rate, life expectancy, CPI, and other indicators."""
     low_GDPpercapita = df.sort_values(by="GDP per capita", ascending=True).head(20)
     high_GDPpercapita = df.sort_values(by="GDP per capita", ascending=False).head(20)
     lower_sel_GDPcols = low_GDPpercapita[
@@ -261,8 +260,8 @@ whereas countries with lower GDP tend to display a wider range, reaching as high
 Note 3:
 Nations characterized by a lower GDP per capita often exhibit a higher
 average unemployment rate compared to those nations with a higher GDP per capita.
-Nevertheless, it is imperative to acknowledge that numerous countries with low GDP per capita maintain an 
-unemployment rate lower than their counterparts with a higher unemployment rate. Consequently, it is evident 
+Nevertheless, it is imperative to acknowledge that numerous countries with low GDP per capita maintain an
+unemployment rate lower than their counterparts with a higher unemployment rate. Consequently, it is evident
 that while GDP per capita may exert an influence on the unemployment rate, its impact is not necessarily substantial.
 
 Note 4:
@@ -295,9 +294,9 @@ general_info()
 """Plot tasks"""
 
 
-"""Task 1: Identify the top 5 countries with the highest GDP (Gross Domestic Product).
-Create a table of these countries containing gross primary education enrollment, unemployment rate,
-labor force participation, CPI and life expectancy."""
+"""Task 1: Identify the top 5 countries with the highest GDP.
+Create a table that includes gross primary education enrollment, unemployment rate,
+labor force participation, Consumer Price Index (CPI), and life expectancy for these countries."""
 high_gdp = df.sort_values(by="GDP", ascending=False).head(5)
 high_gdp["GDP"] = high_gdp["GDP"].apply(lambda x: locale.currency(x, grouping=True))
 high_gdp = high_gdp[
@@ -354,15 +353,14 @@ def top5GDP_info():
 top5GDP_info()
 
 
-"""Task 2: Identify the top 5 countries with the highest inflation rates and
-the top 5 countries with the lowest inflation rates.
-Also, get the CPI Change (%) of all countries that match those queries."""
-cpi_analysis = df[["Country", "CPI", "CPI Change (%)"]]
+"""Task 2: Identify the top 5 countries with the highest inflation rates and the top 5 countries with
+the lowest inflation rates."""
+cpi_analysis = df[["Country", "CPI"]]
 sort_cpi_analysis = cpi_analysis.sort_values(by="CPI", ascending=True)
 sort_cpi_analysis = sort_cpi_analysis.dropna(subset=["Country", "CPI"])
 
 
-def show_inflation_rate():
+def inflation_rate_plot():
     plt.figure(figsize=(10, 6))
     plt.subplot(1, 2, 1)
     plt.bar(sort_cpi_analysis["Country"].head(5), sort_cpi_analysis["CPI"].head(5))
@@ -388,86 +386,94 @@ def show_inflation_rate():
     plt.close()
 
 
-show_inflation_rate()
+inflation_rate_plot()
 
-# Task 3: Identify all the countries with the top 10 highest urban population,
-# as well as all the countries with the top 10 lowest urban population.
-# Also, get the top 5 countries with the highest and top 10 countries with the lowest agricultural land percentage.
-urban_df = pd.DataFrame(df[["Country", "Urban_population"]])
-sort_urban_lowest = urban_df.sort_values(by="Urban_population", ascending=True).head(10)
-sort_urban_highest = urban_df.sort_values(by="Urban_population", ascending=False).head(
-    10
-)
-
-agricultural_df = pd.DataFrame(df[["Country", "Agricultural Land (%)"]])
-sort_agricultural_lowest = agricultural_df.sort_values(
-    by="Agricultural Land (%)", ascending=True
-).head(10)
-sort_agricultural_highest = agricultural_df.sort_values(
-    by="Agricultural Land (%)", ascending=False
-).head(10)
+"""Task 3: Identify all the countries with the ten highest urban populations,
+as well as all the countries with the ten lowest urban populations."""
+sort_urban_lowest = df[["Country", "Urban population"]].sort_values(
+    by="Urban population", ascending=True
+    ).head(10)
+sort_urban_highest = df[["Country", "Urban population"]].sort_values(
+    by="Urban population", ascending=False
+    ).head(10)
 
 
-def show_urbanPopulation():
+def urban_population_plot():
     plt.figure(figsize=(10, 6))
-    plt.subplot(2, 2, 1)
-    plt.bar(sort_urban_lowest["Country"], sort_urban_lowest["Urban_population"])
-    plt.xlabel("Country", fontsize=10)
-    plt.ylabel("Urban_population", fontsize=10)
+    plt.subplot(1, 2, 1)
+    plt.bar(sort_urban_lowest["Country"], sort_urban_lowest["Urban population"])
+    plt.ylabel("Urban Population", fontsize=10)
     plt.xticks(rotation=75)
     plt.title("Top 10 lowest urban populations", fontsize=14)
 
-    plt.subplot(2, 2, 2)
-    plt.bar(sort_urban_highest["Country"], sort_urban_highest["Urban_population"])
-    plt.xlabel("Country", fontsize=10)
-    plt.ylabel("Urban_population", fontsize=10)
+    plt.subplot(1, 2, 2)
+    plt.bar(sort_urban_highest["Country"], sort_urban_highest["Urban population"])
+    plt.ylabel("Urban Population", fontsize=10)
     plt.xticks(rotation=75)
     plt.title("Top 10 highest urban populations", fontsize=14)
 
-    plt.subplot(2, 2, 3)
-    plt.bar(
-        sort_agricultural_lowest["Country"],
-        sort_agricultural_lowest["Agricultural Land (%)"],
-    )
-    plt.xlabel("Country", fontsize=10)
-    plt.ylabel("Agricultural Land (%)", fontsize=10)
-    plt.xticks(rotation=75)
-    plt.title("Top 10 lowest agricultural lands", fontsize=14)
-
-    plt.subplot(2, 2, 4)
-    plt.bar(
-        sort_agricultural_highest["Country"],
-        sort_agricultural_highest["Agricultural Land (%)"],
-    )
-    plt.xlabel("Country", fontsize=10)
-    plt.ylabel("Agricultural Land (%)", fontsize=10)
-    plt.xticks(rotation=75)
-    plt.title("Top 10 highest agricultural lands", fontsize=14)
-
-    plt.subplots_adjust(hspace=0.5, wspace=0.5)
     plt.tight_layout()
     plt.savefig(
-        r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\urban_populations.png",
+        r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\urbanplot.png",
         format="png",
         dpi=300,
     )
     plt.close()
 
 
-show_urbanPopulation()
+urban_population_plot()
 
 
-"""Task 4: Create a bar plot that demonstrates the total tax rate (TTR)
-of the 10 countries with highest GDP."""
+"""Task 4: Obtain information on the top 10 countries with the highest agricultural land percentage and
+the top 10 countries with the lowest agricultural land percentage."""
+sort_agricultural_lowest = df[["Country", "Agricultural Land (%)"]].sort_values(
+    by="Agricultural Land (%)", ascending=True
+).head(10)
+sort_agricultural_highest = df[["Country", "Agricultural Land (%)"]].sort_values(
+    by="Agricultural Land (%)", ascending=False
+).head(10)
+
+
+def agricultural_land_plot():
+    plt.figure(figsize=(10, 6))
+    plt.subplot(1, 2, 1)
+    plt.bar(
+        sort_agricultural_lowest["Country"],
+        sort_agricultural_lowest["Agricultural Land (%)"],
+    )
+    plt.ylabel("Agricultural Land (%)", fontsize=10)
+    plt.xticks(rotation=75)
+    plt.title("Top 10 lowest agricultural lands", fontsize=14)
+
+    plt.subplot(1, 2, 2)
+    plt.bar(
+        sort_agricultural_highest["Country"],
+        sort_agricultural_highest["Agricultural Land (%)"],
+    )
+    plt.ylabel("Agricultural Land (%)", fontsize=10)
+    plt.xticks(rotation=75)
+    plt.title("Top 10 highest agricultural lands", fontsize=14)
+
+    plt.tight_layout()
+    plt.savefig(
+        r"C:\Users\Caioe\OneDrive\Área de Trabalho\Caio\GitHub\HarvardCS50\plot_figs\agriculturalplot.png",
+        format="png",
+        dpi=300,
+    )
+    plt.close()
+
+
+agricultural_land_plot()
+
+"""Task 5: Produce a bar chart depicting the Total Tax Rate (TTR) for the top 10 countries with the highest GDP."""
 gdp10sorted = df.sort_values(by="GDP", ascending=False)
 ten_highest_gdp = gdp10sorted[["Country", "Total tax rate"]].head(10)
-
 
 def TTR_plot():
     plt.figure(figsize=(10, 6))
     plt.bar(ten_highest_gdp["Country"], ten_highest_gdp["Total tax rate"])
     plt.xlabel("Country", fontsize=10)
-    plt.ylabel("CPI", fontsize=10)
+    plt.ylabel("Total Tax Rate", fontsize=10)
     plt.xticks(rotation=75)
     plt.title("Total Tax Rate of the 10 countries with the highest GDP", fontsize=14)
 
@@ -483,7 +489,7 @@ def TTR_plot():
 
 TTR_plot()
 
-"""Task 5: Create a scatter graph that shows the relationship between Forested Area and Co2-Emissions."""
+"""Task 6: Generate a scatterplot illustrating the correlation between Forested Area and CO2 Emissions."""
 max_x_value = 100
 max_y_value = 10000000
 

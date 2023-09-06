@@ -10,18 +10,12 @@ df = pd.DataFrame(read_data)
 """Data Clean"""
 df = data_clean(df)
 
-"""Create average CO2 Emissions per person"""
-df["CO2-Emissions/person"] = df["Population"] / df["Co2-Emissions"]
-"""Create GDP per capita column"""
-df["GDP per capita"] = df["GDP"] / df["Population"]
-
 
 """Create index"""
 """This index was created specifically to calculate how good it is to live in a country.
 All results are based on dataframe information:
 https://www.kaggle.com/datasets/nelgiriyewithana/countries-of-the-world-2023
-It wasn't designed to cater to that country's military, wealth, or anything else.
-Furthermore, this index is not influenced by personal opinions about a specific country or type of country."""
+"""
 
 """Declare points"""
 points = 0
@@ -73,18 +67,18 @@ def QOLindex(country):
 
                     """Double conditions"""
                     if (
+                        country_row.loc[:, "Total tax rate"].item() < 40
+                        and country_row.loc[:, "Tax revenue (%)"].item() < 10
+                    ):
+                        points += 5
+                    elif (
                         country_row.loc[:, "Total tax rate"].item() < 50
                         and country_row.loc[:, "Tax revenue (%)"].item() < 15
                     ):
                         points += 3
-                    elif (
-                        country_row.loc[:, "Total tax rate"].item() < 65
-                        and country_row.loc[:, "Tax revenue (%)"].item() < 20
-                    ):
-                        points += 1
                     if (
                         country_row.loc[:, "GDP per capita"].item() >= 40000
-                        and country_row.loc[:, "Unemployment rate"].item() <= 5
+                        and country_row.loc[:, "Unemployment rate"].item() < 10
                     ):
                         points += 7
                     elif (
@@ -94,10 +88,18 @@ def QOLindex(country):
                         points += 3
 
                     """Single conditions"""
-                    if country_row.loc[:, "Unemployment rate"].item() < 1:
-                        points += 3
-                    elif country_row.loc[:, "Unemployment rate"].item() > 25:
+                    if country_row.loc[:, "Unemployment rate"].item() < 3:
+                        points += 5
+                    elif country_row.loc[:, "Unemployment rate"].item() > 10:
                         points -= 5
+                    if country_row.loc[:, "Tax revenue (%)"].item() < 10:
+                        points += 5
+                    elif country_row.loc[:, "Tax revenue (%)"].item() > 25:
+                        points -= 5
+                    if country_row.loc[:, "Total tax rate"].item() > 50:
+                        points += 5
+                    if country_row.loc[:, "GDP per capita"].item() > 50000:
+                        points += 5
                     elif country_row.loc[:, "GDP per capita"].item() < 1000:
                         points -= 5
 
@@ -114,7 +116,7 @@ def QOLindex(country):
                         country_row.loc[
                             :, "Gross tertiary education enrollment (%)"
                         ].item()
-                        >= 75
+                        >= 70
                     ):
                         points += 5
                     elif country_row.loc[
@@ -132,9 +134,9 @@ def QOLindex(country):
                         country_row.loc[
                             :, "Gross primary education enrollment (%)"
                         ].item()
-                        < 95
+                        > 110
                     ):
-                        points -= 3
+                        points += 5
                     elif (
                         country_row.loc[
                             :, "Gross primary education enrollment (%)"
@@ -148,23 +150,15 @@ def QOLindex(country):
                         ].item()
                         < 10
                     ):
-                        points -= 5
-                    if country_row.loc[:, "Physicians per thousand"].item() > 4:
-                        points += 3
-                    elif country_row.loc[:, "Physicians per thousand"].item() < 0.1:
                         points -= 3
 
                 evaluate_education()
-
+                
                 def evaluate_health():
                     """Global variable points"""
                     global points
 
                     """Double calculations"""
-                    if country_row.loc[:, "Life expectancy"].item() >= 70:
-                        points += 7
-                    elif country_row.loc[:, "Life expectancy"].item() >= 65:
-                        points += 3
                     if (
                         country_row.loc[:, "Infant mortality"].item() <= 6
                         and country_row.loc[:, "Maternal mortality ratio"].item() <= 50
@@ -177,14 +171,22 @@ def QOLindex(country):
                         points += 3
 
                     """Individual calculations"""
-                    if country_row.loc[:, "Life expectancy"].item() > 80:
-                        points += 3
+                    if country_row.loc[:, "Life expectancy"].item() > 75:
+                        points += 5
                     elif country_row.loc[:, "Life expectancy"].item() < 60:
                         points -= 5
-                    if country_row.loc[:, "Infant mortality"].item() > 30:
-                        points -= 3
-                    elif country_row.loc[:, "Infant mortality"].item() > 50:
+                    if country_row.loc[:, "Infant mortality"].item() < 5:
+                        points += 3
+                    if country_row.loc[:, "Infant mortality"].item() > 50:
                         points -= 5
+                    if country_row.loc[:, "Maternal mortality ratio"].item() < 10:
+                        points += 5
+                    elif country_row.loc[:, "Maternal mortality ratio"].item() > 500:
+                        points -= 5
+                    if country_row.loc[:, "Physicians per thousand"].item() > 3:
+                        points += 3
+                    elif country_row.loc[:, "Physicians per thousand"].item() < 0.1:
+                        points -= 3
 
                 evaluate_health()
 
@@ -216,13 +218,13 @@ def QOLindex(country):
                 raise ValueError(f"Country {c} has null values")
 
             # check points
-            if points > 32:
+            if points >= 32:
                 print({c: "Pretty nice country to live"})
-            elif points > 24:
+            elif points >= 24:
                 print({c: "Nice country to live"})
-            elif points > 15:
+            elif points >= 15:
                 print({c: "Not bad at all to live"})
-            elif points > 8:
+            elif points >= 8:
                 print({c: "Bad country to live"})
             else:
                 print({c: "Very bad country to live"})

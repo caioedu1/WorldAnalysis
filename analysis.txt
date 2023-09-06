@@ -146,8 +146,8 @@ whereas countries with lower GDP tend to display a wider range, reaching as high
 Note 3:
 Nations characterized by a lower GDP per capita often exhibit a higher
 average unemployment rate compared to those nations with a higher GDP per capita.
-Nevertheless, it is imperative to acknowledge that numerous countries with low GDP per capita maintain an 
-unemployment rate lower than their counterparts with a higher unemployment rate. Consequently, it is evident 
+Nevertheless, it is imperative to acknowledge that numerous countries with low GDP per capita maintain an
+unemployment rate lower than their counterparts with a higher unemployment rate. Consequently, it is evident
 that while GDP per capita may exert an influence on the unemployment rate, its impact is not necessarily substantial.
 
 Note 4:

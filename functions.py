@@ -39,7 +39,7 @@ def send_email(emails):
 def data_clean(df):
     """Set float to 2 decimal places"""
     pd.options.display.float_format = "{:.2f}".format
-
+ 
     """Some countries has this weird symbol � in its name, so I decided
     to pass the full row of all these countries to Null (None)"""
     df.loc[df["Country"].str.contains("�", na=False), :] = None
@@ -49,6 +49,7 @@ def data_clean(df):
         columns={
             "Agricultural Land( %)": "Agricultural Land (%)",
             "Population: Labor force participation (%)": "Labor force participation (%)",
+            "Urban_population": "Urban population"
         }
     )
 
@@ -81,7 +82,7 @@ def data_clean(df):
         df["Gross tertiary education enrollment (%)"].str.replace("%", "")
     )
     df["CPI"] = pd.to_numeric(df["CPI"].str.replace(",", ""))
-    df["Urban_population"] = pd.to_numeric(df["Urban_population"].str.replace(",", ""))
+    df["Urban population"] = pd.to_numeric(df["Urban population"].str.replace(",", ""))
     df["Agricultural Land (%)"] = pd.to_numeric(
         df["Agricultural Land (%)"].str.replace("%", ""), errors="coerce"
     )
@@ -92,13 +93,6 @@ def data_clean(df):
     )
     df["Tax revenue (%)"] = pd.to_numeric(df["Tax revenue (%)"].str.replace("%", ""))
     df["Total tax rate"] = pd.to_numeric(df["Total tax rate"].str.replace("%", ""))
-    df["CPI Change (%)"] = (
-        pd.to_numeric(
-            df["CPI Change (%)"].str.replace("%", "").str.replace(".", ""),
-            errors="coerce",
-        )
-        / 100
-    )
     df["Co2-Emissions"] = pd.to_numeric(df["Co2-Emissions"].str.replace(",", ""))
 
     """Add some important columns"""
